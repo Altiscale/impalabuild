@@ -1,4 +1,11 @@
 impalabuild
 ===========
 
-Repo wrapper for Impala build for Hadoop 2.2
+Repo wrapper for Impala v1.2.2 build for Hadoop 2.2
+
+
+HOW-TO
+======
+Just simply run the build.sh script, this will create a SRPM for mock.
+The final artifact will be the impala v1.2.2 RPM.
+
