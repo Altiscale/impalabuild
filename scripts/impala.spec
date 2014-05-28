@@ -104,7 +104,9 @@ pushd `pwd`
 echo "IMPALA_HOME=$IMPALA_HOME"
 cd "$IMPALA_HOME"
 # Patch this from Debug to Release
-./buildall.sh
+# ./buildall.sh
+# Skip all test, dont format the mini cluster since we don't have one spinned up 
+./buildall.sh -skiptests -notestdata -noformat
 popd
 
 popd
