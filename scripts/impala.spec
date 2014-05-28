@@ -1,4 +1,6 @@
 %define major_ver IMPALA_VERSION
+%define hadoop_ver HADOOP_VERSION_REPLACE
+%define hive_ver HIVE_VERSION_REPLACE
 %define service_name alti-impala
 %define company_prefix altiscale
 %define pkg_name %{service_name}-%{major_ver}
@@ -14,7 +16,6 @@ Summary: %{pkg_name} RPM Installer
 Version: %{major_ver}
 Release: %{build_release}%{?dist}
 License: Copyright (C) 2014 Altiscale. All rights reserved.
-# Packager: %{packager}
 Source: %{_sourcedir}/%{service_name}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%{service_name}
 Requires: vcc-hadoop-2.2.0 >= 2.2.0
@@ -22,7 +23,8 @@ Requires: vcc-hive-0.12.0
 # Hive 0.13 has not yet been tested with this version of Impala.
 # Requires: vcc-hive-0.13.0
 Requires: jre >= 1.7
-BuildRequires: vcc-hadoop-2.2.0 >= 2.2.0
+BuildRequires: vcc-hadoop-%{hadoop_ver} >= 2.2.0
+BuildRequires: vcc-hive-%{hive_ver} >= 0.12.0
 BuildRequires: boost = 1.46.1
 BuildRequires: llvm = 3.3
 BuildRequires: cmake >= 2.6.4
@@ -52,7 +54,7 @@ BuildRequires: svn
 BuildRequires: git
 
 # Apply all patches to fix CLASSPATH and java lib issues
-Patch1: %{_sourcedir}/patch.impala
+# Patch1: %{_sourcedir}/patch.impala
 
 Url: http://www.altiscale.com/
 
@@ -73,7 +75,7 @@ point to vcc-hadoop files.
 
 # Use -p0 if you are building this without mock
 # %patch1 -p0
-%patch1 -p1
+# %patch1 -p1
 
 
 %build
@@ -88,7 +90,8 @@ echo "build - impala core in %{_builddir}"
 pushd `pwd`
 cd %{_builddir}/%{service_name}/
 export IMPALA_HOME=`pwd`
-export HADOOP_VERSION=2.2.0
+export HADOOP_VERSION=%{hadoop_ver}
+export HIVE_VERSION=%{hive_ver}
 . bin/impala-config.sh
 source bin/impala-config.sh
 env | grep "IMPALA.*VERSION"

@@ -24,11 +24,23 @@ fi
 if [ "x${SCALA_HOME}" = "x" ] ; then
   export SCALA_HOME=/opt/scala
 fi
+if [ "x${HADOOP_VERSION}" = "x" ] ; then
+  export HADOOP_VERSION=2.2.0
+fi
+if [ "x${HIVE_VERSION}" = "x" ] ; then
+  export HIVE_VERSION=0.13.0
+fi
 if [ "x${HADOOP_HOME}" = "x" ] ; then
-  export HADOOP_HOME=/opt/hadoop
+  export HADOOP_HOME=/opt/hadoop-${HADOOP_VERSION}
 fi
 if [ "x${HADOOP_CONF_DIR}" = "x" ] ; then
-  export HADOOP_CONF_DIR=/etc/hadoop
+  export HADOOP_CONF_DIR=/etc/hadoop-${HADOOP_VERSION}
+fi
+if [ "x${HIVE_HOME}" = "x" ] ; then
+  export HIVE_HOME=/opt/hive-${HIVE_VERSION}
+fi
+if [ "x${HIVE_CONF_DIR}" = "x" ] ; then
+  export HIVE_CONF_DIR=/etc/hive-${HIVE_VERSION}
 fi
 
 export PATH=$PATH:$M2_HOME/bin:$SCALA_HOME/bin:$ANT_HOME/bin:$JAVA_HOME/bin
@@ -45,12 +57,26 @@ if [ "x${IMPALA_UID}" = "x" ] ; then
   export IMPALA_UID=411460044
 fi
 if [ "x${IMPALA_VERSION}" = "x" ] ; then
-  export IMPALA_VERSION=v1.2.2
+  export IMPALA_VERSION=1.2.2
 fi
 
-# The build time here is par tof the release number
+if [ "x${ALTISCALE_RELEASE}" = "x" ] ; then
+  export ALTISCALE_RELEASE=2.0.0
+else
+  export ALTISCALE_RELEASE
+fi
+
+if [ "x${BRANCH_NAME}" = "x" ] ; then
+  export BRANCH_NAME=altiscale-branch-1.2.2
+fi
+
+if [ "x${BUILD_TIMEOUT}" = "x" ] ; then
+  export BUILD_TIMEOUT=14400
+fi
+
+# The build time here is part of the release number
 # It is monotonic increasing
-BUILD_TIME=1
+BUILD_TIME=$(date +%Y%m%d%H%M)
 export BUILD_TIME
 
 # Customize build OPTS for MVN
