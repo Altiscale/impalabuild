@@ -106,7 +106,7 @@ cd "$IMPALA_HOME"
 # Patch this from Debug to Release
 # ./buildall.sh
 # Skip all test, dont format the mini cluster since we don't have one spinned up 
-./buildall.sh -skiptests -notestdata -noformat
+./buildall.sh -notests
 popd
 
 popd
