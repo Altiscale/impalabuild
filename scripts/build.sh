@@ -71,10 +71,17 @@ echo "ok - tar zip source file, preparing for build/compile by rpmbuild"
 # 
 mkdir -p $WORKSPACE/rpmbuild/{BUILD,BUILDROOT,RPMS,SPECS,SOURCES,SRPMS}/
 cp "$impala_spec" $WORKSPACE/rpmbuild/SPECS/impala.spec
-cp -rp $WORKSPACE/impala $WORKSPACE/rpmbuild/SOURCES/alti-impala
+pushd $WORKSPACE
+tar --exclude .git --exclude .gitignore -cf $WORKSPACE/rpmbuild/SOURCES/impala.tar impala
+popd
 
 pushd "$WORKSPACE/rpmbuild/SOURCES/"
-tar -cpzf alti-impala.tar.gz alti-impala
+tar -xf impala.tar
+if [ -d alti-impala ] ; then
+  rm -rf alti-impala
+fi
+mv impala alti-impala
+tar --exclude .git --exclude .gitignore -cpzf alti-impala.tar.gz alti-impala
 stat alti-impala.tar.gz
 
 if [ -f "$maven_settings" ] ; then
@@ -129,7 +136,7 @@ chmod 2755 "$WORKSPACE/var/lib/mock"
 mkdir -p "$WORKSPACE/var/cache/mock"
 chmod 2755 "$WORKSPACE/var/cache/mock"
 sed "s:BASEDIR:$WORKSPACE:g" "$mock_cfg" > "$mock_cfg_runtime"
-sed "s:IMPALA_VERSION:$IMPALA_VERSION:g" "$mock_cfg" > "$mock_cfg_runtime"
+sed -i "s:IMPALA_VERSION:$IMPALA_VERSION:g" "$mock_cfg_runtime"
 echo "ok - applying mock config $mock_cfg_runtime"
 cat "$mock_cfg_runtime"
 mock -vvv --configdir=$curr_dir -r altiscale-impala-centos-6-x86_64.runtime --resultdir=$WORKSPACE/rpmbuild/RPMS/ --rebuild $WORKSPACE/rpmbuild/SRPMS/alti-impala-${IMPALA_VERSION}-${BUILD_TIME}.el6.src.rpm
