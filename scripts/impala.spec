@@ -1,4 +1,6 @@
 %define major_ver IMPALA_VERSION
+%define hadoop_ver HADOOP_VERSION_REPLACE
+%define hive_ver HIVE_VERSION_REPLACE
 %define service_name alti-impala
 %define company_prefix altiscale
 %define pkg_name %{service_name}-%{major_ver}
@@ -21,8 +23,8 @@ Requires: vcc-hive-0.12.0
 # Hive 0.13 has not yet been tested with this version of Impala.
 # Requires: vcc-hive-0.13.0
 Requires: jre >= 1.7
-BuildRequires: vcc-hadoop-2.2.0 >= 2.2.0
-BuildRequires: vcc-hive-0.12.0 >= 0.12.0
+BuildRequires: vcc-hadoop-%{hadoop_ver} >= 2.2.0
+BuildRequires: vcc-hive-%{hive_ver} >= 0.12.0
 BuildRequires: boost = 1.46.1
 BuildRequires: llvm = 3.3
 BuildRequires: cmake >= 2.6.4
@@ -88,8 +90,8 @@ echo "build - impala core in %{_builddir}"
 pushd `pwd`
 cd %{_builddir}/%{service_name}/
 export IMPALA_HOME=`pwd`
-export HADOOP_VERSION=2.2.0
-export HIVE_VERSION=0.12.0
+export HADOOP_VERSION=%{hadoop_ver}
+export HIVE_VERSION=%{hive_ver}
 . bin/impala-config.sh
 source bin/impala-config.sh
 env | grep "IMPALA.*VERSION"

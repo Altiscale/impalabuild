@@ -24,11 +24,23 @@ fi
 if [ "x${SCALA_HOME}" = "x" ] ; then
   export SCALA_HOME=/opt/scala
 fi
+if [ "x${HADOOP_VERSION}" = "x" ] ; then
+  export HADOOP_VERSION=2.2.0
+fi
+if [ "x${HIVE_VERSION}" = "x" ] ; then
+  export HIVE_VERSION=0.13.0
+fi
 if [ "x${HADOOP_HOME}" = "x" ] ; then
-  export HADOOP_HOME=/opt/hadoop
+  export HADOOP_HOME=/opt/hadoop-${HADOOP_VERSION}
 fi
 if [ "x${HADOOP_CONF_DIR}" = "x" ] ; then
-  export HADOOP_CONF_DIR=/etc/hadoop
+  export HADOOP_CONF_DIR=/etc/hadoop-${HADOOP_VERSION}
+fi
+if [ "x${HIVE_HOME}" = "x" ] ; then
+  export HIVE_HOME=/opt/hive-${HIVE_VERSION}
+fi
+if [ "x${HIVE_CONF_DIR}" = "x" ] ; then
+  export HIVE_CONF_DIR=/etc/hive-${HIVE_VERSION}
 fi
 
 export PATH=$PATH:$M2_HOME/bin:$SCALA_HOME/bin:$ANT_HOME/bin:$JAVA_HOME/bin
@@ -45,7 +57,7 @@ if [ "x${IMPALA_UID}" = "x" ] ; then
   export IMPALA_UID=411460044
 fi
 if [ "x${IMPALA_VERSION}" = "x" ] ; then
-  export IMPALA_VERSION=v1.3.1
+  export IMPALA_VERSION=1.3.1
 fi
 
 if [ "x${ALTISCALE_RELEASE}" = "x" ] ; then
