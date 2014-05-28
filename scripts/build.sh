@@ -64,6 +64,7 @@ fi
   echo "ok - switching to impaala branch $BRANCH_NAME and refetch the files"
   git checkout $BRANCH_NAME
   git fetch --all
+  git pull
 popd
 
 echo "ok - tar zip source file, preparing for build/compile by rpmbuild"
