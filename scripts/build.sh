@@ -129,6 +129,7 @@ chmod 2755 "$WORKSPACE/var/lib/mock"
 mkdir -p "$WORKSPACE/var/cache/mock"
 chmod 2755 "$WORKSPACE/var/cache/mock"
 sed "s:BASEDIR:$WORKSPACE:g" "$mock_cfg" > "$mock_cfg_runtime"
+sed "s:IMPALA_VERSION:$IMPALA_VERSION:g" "$mock_cfg" > "$mock_cfg_runtime"
 echo "ok - applying mock config $mock_cfg_runtime"
 cat "$mock_cfg_runtime"
 mock -vvv --configdir=$curr_dir -r altiscale-impala-centos-6-x86_64.runtime --resultdir=$WORKSPACE/rpmbuild/RPMS/ --rebuild $WORKSPACE/rpmbuild/SRPMS/alti-impala-${IMPALA_VERSION}-${BUILD_TIME}.el6.src.rpm
