@@ -103,8 +103,8 @@ cd ..
 pushd `pwd`
 echo "IMPALA_HOME=$IMPALA_HOME"
 cd "$IMPALA_HOME"
-# Patch this from Debug to Release
-./buildall.sh -skiptests
+# Use option -codecoverage_release to change Debug to Release
+./buildall.sh -skiptests -codecoverage_release
 popd
 
 popd
