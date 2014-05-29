@@ -110,7 +110,7 @@ cd "$IMPALA_HOME"
 # Patch this from Debug to Release
 # ./buildall.sh
 # Skip all test, don't format mini cluster since we don't have one setup for testing
-./buildall.sh -skiptests -codecoverage_release
+./buildall.sh -skiptests
 popd
 
 popd
