@@ -111,9 +111,6 @@ echo "ok - applying version number $IMPALA_VERSION and release number $BUILD_TIM
 sed -i "s/IMPALA_VERSION/$IMPALA_VERSION/g" "$WORKSPACE/rpmbuild/SPECS/impala.spec"
 sed -i "s/HADOOP_VERSION_REPLACE/$HADOOP_VERSION/g" "$WORKSPACE/rpmbuild/SPECS/impala.spec"
 sed -i "s/HIVE_VERSION_REPLACE/$HIVE_VERSION/g" "$WORKSPACE/rpmbuild/SPECS/impala.spec"
-sed -i "s/IMPALA_USER/$IMPALA_USER/g" "$WORKSPACE/rpmbuild/SPECS/impala.spec"
-sed -i "s/IMPALA_GID/$IMPALA_GID/g" "$WORKSPACE/rpmbuild/SPECS/impala.spec"
-sed -i "s/IMPALA_UID/$IMPALA_UID/g" "$WORKSPACE/rpmbuild/SPECS/impala.spec"
 sed -i "s/BUILD_TIME/$BUILD_TIME/g" "$WORKSPACE/rpmbuild/SPECS/impala.spec"
 
 rpmbuild -vvv -bs $WORKSPACE/rpmbuild/SPECS/impala.spec \
