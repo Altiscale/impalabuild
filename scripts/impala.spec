@@ -21,10 +21,8 @@ Release: %{build_release}%{?dist}
 License: Copyright (C) 2014 Altiscale. All rights reserved.
 Source: %{_sourcedir}/%{service_name}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%{service_name}
-Requires: vcc-hadoop-2.2.0 >= 2.2.0
-Requires: vcc-hive-0.12.0
-# Hive 0.13 has not yet been tested with this version of Impala.
-# Requires: vcc-hive-0.13.0
+Requires: vcc-hadoop-%{hadoop_ver}
+Requires: vcc-hive-%{hive_ver}
 Requires: jre >= 1.7
 BuildRequires: vcc-hadoop-%{hadoop_ver} >= 2.2.0
 BuildRequires: vcc-hive-%{hive_ver} >= 0.12.0
