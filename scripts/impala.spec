@@ -21,10 +21,9 @@ Release: %{build_release}%{?dist}
 License: Copyright (C) 2014 Altiscale. All rights reserved.
 Source: %{_sourcedir}/%{service_name}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%{service_name}
-Requires: vcc-hadoop-2.2.0 >= 2.2.0
-Requires: vcc-hive-0.12.0
+Requires: vcc-hadoop-%{hadoop_ver}
+Requires: vcc-hive-%{hive_ver}
 # Hive 0.13 has not yet been tested with this version of Impala.
-# Requires: vcc-hive-0.13.0
 Requires: jre >= 1.7
 BuildRequires: vcc-hadoop-%{hadoop_ver} >= 2.2.0
 BuildRequires: vcc-hive-%{hive_ver} >= 0.12.0
@@ -135,16 +134,27 @@ echo "java dir = %{_javadir}"
 echo "data dir = %{_datadir}"
 
 # Incremental fix on installed files
-%{__mkdir} -p %{buildroot}%{_bindir}
-%{__mkdir} -p %{buildroot}%{libdir}
-%{__mkdir} -p %{buildroot}%{libdir}/llvm-ir/
-%{__mkdir} -p %{buildroot}%{libdir}/lib/
+install -dm 755 %{buildroot}%{_bindir}
+install -dm 755 %{buildroot}%{libdir}
+install -dm 755 %{buildroot}%{libdir}/{sbin-debug,llvm-ir,lib,www}
+
 install -p -m 755 %{_builddir}/%{service_name}/be/build/release/service/impalad %{buildroot}%{_bindir}/
 install -p -m 755 %{_builddir}/%{service_name}/be/build/release/catalog/catalogd %{buildroot}%{_bindir}/
 install -p -m 755 %{_builddir}/%{service_name}/be/build/release/statestore/statestored %{buildroot}%{_bindir}/
 
 install -p -m 755 %{_builddir}/%{service_name}/llvm-ir/test-loop.ir %{buildroot}%{libdir}/llvm-ir/test-loop.ir
 install -p -m 755 %{_builddir}/%{service_name}/llvm-ir/impala-no-sse.ll %{buildroot}%{libdir}/llvm-ir/impala-no-sse.ll
+install -p -m 755 %{_builddir}/%{service_name}/llvm-ir/impala-sse.ll %{buildroot}%{libdir}/llvm-ir/impala-sse.ll
+
+install -p -m 755 %{_builddir}/%{service_name}/be/build/release/service/libfesupport.so %{buildroot}%{libdir}/sbin-debug/
+install -p -m 755 %{_builddir}/%{service_name}/be/build/release/service/impalad %{buildroot}%{libdir}/sbin-debug/
+install -p -m 755 %{_builddir}/%{service_name}/be/build/release/catalog/catalogd %{buildroot}%{libdir}/sbin-debug/
+install -p -m 755 %{_builddir}/%{service_name}/be/build/release/util/libloggingsupport.so %{buildroot}%{libdir}/sbin-debug/
+install -p -m 755 %{_builddir}/%{service_name}/be/build/release/statestore/statestored %{buildroot}%{libdir}/sbin-debug/
+install -p -m 755 %{_builddir}/%{service_name}/be/build/release/service/session-expiry-test %{buildroot}%{libdir}/sbin-debug/
+
+# Copy bootstrap doc
+cp -rp %{_builddir}/%{service_name}/www/* %{buildroot}%{libdir}/www/
 
 pushd %{_builddir}/%{service_name}/fe/target/dependency/
    for i in *.jar
@@ -162,11 +172,23 @@ rm -rf %{buildroot}%{install_impala_dest}
 %defattr(0755,root,root,0755)
 # %{install_impala_dest}
 %{_bindir}/*
-%{libdir}/llvm-ir/*
-%{libdir}/lib/*
+%{libdir}/llvm-ir/
+%{libdir}/lib/
+%{libdir}/www/
+%{libdir}/sbin-debug/
 
+%post
+#Install libhdfs and libhadoop to /usr/lib/impala/lib/
+ln -s /opt/hadoop-%{hadoop_ver}/lib/native/libhadoop.so.1.0.0  %{libdir}/lib/libhadoop.so.1.0.0
+ln -s /opt/hadoop-%{hadoop_ver}/lib/native/libhdfs.so.0.0.0  %{libdir}/lib/libhdfs.so.0.0.0
+
+%postun
+rm -f %{libdir}/lib/libhadoop.so.1.0.0
+rm -f %{libdir}/lib/libhdfs.so.0.0.0
 
 %changelog
+* Wed May 28 2014 Andrew Lee 20140528
+- Complete install section with all libs and binaries
 * Tue May 13 2014 Andrew Lee 20140513
 - Update BuildRequire tag to include missing dependencies libs
 * Wed Apr 03 2014 Andrew Lee 20140403

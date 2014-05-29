@@ -28,7 +28,7 @@ if [ "x${HADOOP_VERSION}" = "x" ] ; then
   export HADOOP_VERSION=2.2.0
 fi
 if [ "x${HIVE_VERSION}" = "x" ] ; then
-  export HIVE_VERSION=0.13.0
+  export HIVE_VERSION=0.12.0
 fi
 if [ "x${HADOOP_HOME}" = "x" ] ; then
   export HADOOP_HOME=/opt/hadoop-${HADOOP_VERSION}
