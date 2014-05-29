@@ -1,15 +1,18 @@
-%define major_ver IMPALA_VERSION
-%define hadoop_ver HADOOP_VERSION_REPLACE
-%define hive_ver HIVE_VERSION_REPLACE
-%define service_name alti-impala
-%define company_prefix altiscale
-%define pkg_name %{service_name}-%{major_ver}
+%global impala_uid          411460044
+%global impala_gid          411460016
+%global impala_user         impala
+
+%define major_ver           IMPALA_VERSION
+%define hadoop_ver          HADOOP_VERSION_REPLACE
+%define hive_ver            HIVE_VERSION_REPLACE
+%define service_name        alti-impala
+%define company_prefix      altiscale
+%define pkg_name            %{service_name}-%{major_ver}
 %define install_impala_dest /opt/%{pkg_name}
-%define packager PKGER
-%define impala_user IMPALA_USER
-%define impala_gid IMPALA_GID
-%define impala_uid IMPALA_UID
-%define build_release BUILD_TIME
+%define build_release       BUILD_TIME
+
+# Define installation folder
+%define libdir              /usr/lib/impala/
 
 Name: %{service_name}
 Summary: %{pkg_name} RPM Installer
@@ -104,7 +107,9 @@ cd ..
 pushd `pwd`
 echo "IMPALA_HOME=$IMPALA_HOME"
 cd "$IMPALA_HOME"
-# Use option -codecoverage_release to change Debug to Release
+# Patch this from Debug to Release
+# ./buildall.sh
+# Skip all test, don't format mini cluster since we don't have one setup for testing
 ./buildall.sh -skiptests -codecoverage_release
 popd
 
@@ -121,8 +126,33 @@ echo "test installtion folder (aka buildroot) is RPM_BUILD_ROOT = %{buildroot}"
 echo "test install impala dest = %{buildroot}/%{install_impala_dest}"
 echo "test install impala label pkg_name = %{pkg_name}"
 %{__mkdir} -p %{buildroot}%{install_impala_dest}/
-# work folder is for runtime, this is a dummy placeholder here to set the right permission within RPMs
-cp -rp %{_builddir}/%{service_name}/bin %{buildroot}%{install_impala_dest}/
+# TBD: remove this when we figure out all the necessary files that needs to be installed
+# cp -rp %{_builddir}/%{service_name} %{buildroot}%{install_impala_dest}
+
+echo "man page dir = %{_mandir}"
+echo "bin dir = %{_bindir}"
+echo "java dir = %{_javadir}"
+echo "data dir = %{_datadir}"
+
+# Incremental fix on installed files
+%{__mkdir} -p %{buildroot}%{_bindir}
+%{__mkdir} -p %{buildroot}%{libdir}
+%{__mkdir} -p %{buildroot}%{libdir}/llvm-ir/
+%{__mkdir} -p %{buildroot}%{libdir}/lib/
+install -p -m 755 %{_builddir}/%{service_name}/be/build/release/service/impalad %{buildroot}%{_bindir}/
+install -p -m 755 %{_builddir}/%{service_name}/be/build/release/catalog/catalogd %{buildroot}%{_bindir}/
+install -p -m 755 %{_builddir}/%{service_name}/be/build/release/statestore/statestored %{buildroot}%{_bindir}/
+
+install -p -m 755 %{_builddir}/%{service_name}/llvm-ir/test-loop.ir %{buildroot}%{libdir}/llvm-ir/test-loop.ir
+install -p -m 755 %{_builddir}/%{service_name}/llvm-ir/impala-no-sse.ll %{buildroot}%{libdir}/llvm-ir/impala-no-sse.ll
+
+pushd %{_builddir}/%{service_name}/fe/target/dependency/
+   for i in *.jar
+   do
+      install -p -m 644 "%{_builddir}/%{service_name}/fe/target/dependency/$i" %{buildroot}%{libdir}/lib/
+   done
+popd
+
 
 %clean
 echo "ok - cleaning up temporary files, deleting %{buildroot}%{install_impala_dest}"
@@ -130,7 +160,11 @@ rm -rf %{buildroot}%{install_impala_dest}
 
 %files
 %defattr(0755,root,root,0755)
-%{install_impala_dest}
+# %{install_impala_dest}
+%{_bindir}/*
+%{libdir}/llvm-ir/*
+%{libdir}/lib/*
+
 
 %changelog
 * Tue May 13 2014 Andrew Lee 20140513
