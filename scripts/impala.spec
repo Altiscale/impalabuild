@@ -188,6 +188,8 @@ rm -f %{libdir}/lib/libhadoop.so.1.0.0
 rm -f %{libdir}/lib/libhdfs.so.0.0.0
 
 %changelog
+* Wed May 28 2014 Andrew Lee 20140528
+- Complete %install section with all libs and binaries
 * Tue May 13 2014 Andrew Lee 20140513
 - Update BuildRequire tag to include missing dependencies libs
 * Wed Apr 03 2014 Andrew Lee 20140403
