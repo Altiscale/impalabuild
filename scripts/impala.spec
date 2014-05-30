@@ -161,6 +161,9 @@ install -dm 755 %{buildroot}%{libdir}
 install -dm 755 %{buildroot}%{vardir}
 install -dm 755 %{buildroot}%{libdir}/{sbin-debug,llvm-ir,lib,www}
 install -dm 755 %{buildroot}%{vardir}/{log,run,lib}
+install -dm 755 %{buildroot}%{vardir}/log/impala
+install -dm 755 %{buildroot}%{vardir}/run/impala
+install -dm 755 %{buildroot}%{vardir}/lib/impala
 install -dm 755 %{buildroot}%{confdir}/impala/conf.dist/
 install -dm 755 %{buildroot}%{confdir}/default/
 install -dm 755 %{buildroot}%{confdir}/security/limits.d/
