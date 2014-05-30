@@ -142,11 +142,15 @@ mock -vvv --configdir=$curr_dir -r altiscale-impala-centos-6-x86_64.runtime --re
 if [ $? -ne "0" ] ; then
   echo "fail - mock RPM build failed"
   cleanup_secrets
+  mock --clean
+  mock --scrub=all
   exit -97
 fi
 
 # Delete all src.rpm in the RPMS folder since this is redundant and copied by the mock process
 rm -f $WORKSPACE/rpmbuild/RPMS/*.src.rpm  
+mock --clean
+mock --scrub=all
 
 echo "ok - build Completed successfully!"
 
