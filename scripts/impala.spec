@@ -1,6 +1,9 @@
 %global impala_uid          411460044
 %global impala_gid          411460016
 %global impala_user         impala
+%global libdir              /usr/lib/impala/
+%global vardir              %{_localstatedir}
+%global confdir             %{_sysconfdir}
 
 %define major_ver           IMPALA_VERSION
 %define hadoop_ver          HADOOP_VERSION_REPLACE
@@ -10,9 +13,6 @@
 %define pkg_name            %{service_name}-%{major_ver}
 %define install_impala_dest /opt/%{pkg_name}
 %define build_release       BUILD_TIME
-
-# Define installation folder
-%define libdir              /usr/lib/impala/
 
 Name: %{service_name}
 Summary: %{pkg_name} RPM Installer
@@ -116,14 +116,23 @@ echo "Build Completed successfully!"
 
 %install
 # manual cleanup for compatibility, and to be safe if the %clean isn't implemented
-rm -rf %{buildroot}%{install_impala_dest}
+rm -rf %{buildroot}%{_bindir}
+rm -rf %{buildroot}%{libdir}
+rm -rf %{buildroot}%{vardir}
+rm -rf %{buildroot}%{confdir}
+
 # re-create installed dest folders
-mkdir -p %{buildroot}%{install_impala_dest}
 echo "compiled/built folder is (not the same as buildroot) RPM_BUILD_DIR = %{_builddir}"
 echo "test installtion folder (aka buildroot) is RPM_BUILD_ROOT = %{buildroot}"
-echo "test install impala dest = %{buildroot}/%{install_impala_dest}"
+
+echo "test install impala dest = %{buildroot}/%{_bindir}"
+echo "test install impala dest = %{buildroot}/%{libdir}"
+echo "test install impala dest = %{buildroot}/%{vardir}"
+echo "test install impala dest = %{buildroot}/%{confdir}"
+
 echo "test install impala label pkg_name = %{pkg_name}"
-%{__mkdir} -p %{buildroot}%{install_impala_dest}/
+
+# %{__mkdir} -p %{buildroot}%{install_impala_dest}/
 # TBD: remove this when we figure out all the necessary files that needs to be installed
 # cp -rp %{_builddir}/%{service_name} %{buildroot}%{install_impala_dest}
 
@@ -131,11 +140,21 @@ echo "man page dir = %{_mandir}"
 echo "bin dir = %{_bindir}"
 echo "java dir = %{_javadir}"
 echo "data dir = %{_datadir}"
+echo "libexec dir = %{_libexecdir}"
+echo "defaultdoc dir = %{_defaultdocdir}"
 
 # Incremental fix on installed files
 install -dm 755 %{buildroot}%{_bindir}
 install -dm 755 %{buildroot}%{libdir}
+install -dm 755 %{buildroot}%{vardir}
 install -dm 755 %{buildroot}%{libdir}/{sbin-debug,llvm-ir,lib,www}
+install -dm 755 %{buildroot}%{vardir}/{log,run,lib}
+install -dm 755 %{buildroot}%{confdir}/impala/conf.dist/
+install -dm 755 %{buildroot}%{confdir}/default/
+install -dm 755 %{buildroot}%{confdir}/security/limits.d/
+# The following 2 folders only exist in 1.2.2 (1.2.4, and further version don't have these 2 anymore from bigtop)
+install -dm 755 %{buildroot}%{_libexecdir}/
+install -dm 755 %{buildroot}%{_defaultdocdir}/bigtop-utils-0.4+300/
 
 install -p -m 755 %{_builddir}/%{service_name}/be/build/release/service/impalad %{buildroot}%{_bindir}/
 install -p -m 755 %{_builddir}/%{service_name}/be/build/release/catalog/catalogd %{buildroot}%{_bindir}/
@@ -162,19 +181,43 @@ pushd %{_builddir}/%{service_name}/fe/target/dependency/
    done
 popd
 
+# Install system config and license
+install -p -m 755 %{_builddir}/%{service_name}/%{confdir}/default/impala %{buildroot}%{confdir}/default/impala
+install -p -m 755 %{_builddir}/%{service_name}/%{confdir}/default/bigtop-utils %{buildroot}%{confdir}/default/bigtop-utils
+install -p -m 755 %{_builddir}/%{service_name}/%{confdir}/security/limits.d/impala.conf %{buildroot}%{confdir}/security/limits.d/impala.conf
+install -p -m 755 %{_builddir}/%{service_name}/%{_libexecdir}/bigtop-detect-javahome %{buildroot}%{_libexecdir}/bigtop-detect-javahome
+install -p -m 755 %{_builddir}/%{service_name}/%{_defaultdocdir}/bigtop-utils-0.4+300/LICENSE %{buildroot}%{_defaultdocdir}/bigtop-utils-0.4+300/LICENSE
+
 
 %clean
-echo "ok - cleaning up temporary files, deleting %{buildroot}%{install_impala_dest}"
-rm -rf %{buildroot}%{install_impala_dest}
+# echo "ok - cleaning up temporary files, deleting %{buildroot}%{install_impala_dest}"
+# rm -rf %{buildroot}%{install_impala_dest}
+echo "ok - cleaning up temporary files, deleting %{buildroot}/%{_bindir}"
+echo "ok - cleaning up temporary files, deleting %{buildroot}/%{libdir}"
+echo "ok - cleaning up temporary files, deleting %{buildroot}/%{vardir}"
+echo "ok - cleaning up temporary files, deleting %{buildroot}/%{confdir}"
+rm -rf %{buildroot}%{_bindir}
+rm -rf %{buildroot}%{libdir}
+rm -rf %{buildroot}%{vardir}
+rm -rf %{buildroot}%{confdir}
 
 %files
-%defattr(0755,root,root,0755)
+%defattr(0755,impala,impala,0755)
 # %{install_impala_dest}
+%doc %{_defaultdocdir}/bigtop-utils-0.4+300/LICENSE
 %{_bindir}/*
 %{libdir}/llvm-ir/
 %{libdir}/lib/
 %{libdir}/www/
 %{libdir}/sbin-debug/
+%{confdir}/default/impala
+%{confdir}/default/bigtop-utils
+%{confdir}/security/limits.d/impala.conf
+%{_libexecdir}/bigtop-detect-javahome
+%dir %{vardir}/lib/impala
+%dir %{vardir}/run/impala
+%dir %{vardir}/log/impala
+%dir %{confdir}/impala/conf.dist/
 
 %post
 #Install libhdfs and libhadoop to /usr/lib/impala/lib/
@@ -186,6 +229,8 @@ rm -f %{libdir}/lib/libhadoop.so.1.0.0
 rm -f %{libdir}/lib/libhdfs.so.0.0.0
 
 %changelog
+* Fri May 30 2014 Andrew Lee 20140530
+- Add sysconfig and license doc
 * Wed May 28 2014 Andrew Lee 20140528
 - Complete install section with all libs and binaries
 * Tue May 13 2014 Andrew Lee 20140513
