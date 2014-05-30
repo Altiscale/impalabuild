@@ -68,6 +68,18 @@ This version works with Hive 0.12 and requires mysql and other component that wo
 The patch includes both v1.2.2 to v1.2.3 and updating HADOOP_VERSION and HADOOP_CONF_DIR to 
 point to vcc-hadoop files.
 
+%pre
+# Soft creation for impala user if it doesn't exist. This behavior is idempotence to Chef deployment.
+# Should be harmless. MAKE SURE UID and GID is correct FIRST!!!!!!
+getent group %{impala_user} >/dev/null || groupadd -f -g %{impala_gid} -r %{impala_user}
+if ! getent passwd %{impala_user} >/dev/null ; then
+    if ! getent passwd %{impala_uid} >/dev/null ; then
+      useradd -r -u %{impala_uid} -g %{impala_user} -c "Soft creation of user and group of impala for manual deployment" %{impala_user}
+    else
+      useradd -r -g %{impala_user} -c "Soft adding user impala to group impala for manual deployment" %{impala_user}
+    fi
+fi
+
 %prep
 # copying files into BUILD/impala/ e.g. BUILD/impala/* 
 # echo "ok - copying files from %{_sourcedir} to folder  %{_builddir}/%{service_name}"
@@ -238,7 +250,7 @@ rm -f %{libdir}/lib/libhdfs.so.0.0.0
 
 %changelog
 * Fri May 30 2014 Andrew Lee 20140530
-- Add sysconfig and license doc
+- Add sysconfig and license doc, add pre macro to soft create user and group
 * Wed May 28 2014 Andrew Lee 20140528
 - Complete install section with all libs and binaries
 * Tue May 13 2014 Andrew Lee 20140513
