@@ -120,6 +120,8 @@ rm -rf %{buildroot}%{_bindir}
 rm -rf %{buildroot}%{libdir}
 rm -rf %{buildroot}%{vardir}
 rm -rf %{buildroot}%{confdir}
+rm -rf %{buildroot}%{_libexecdir}
+rm -rf %{buildroot}%{_defaultdocdir}
 
 # re-create installed dest folders
 echo "compiled/built folder is (not the same as buildroot) RPM_BUILD_DIR = %{_builddir}"
@@ -129,6 +131,8 @@ echo "test install impala dest = %{buildroot}/%{_bindir}"
 echo "test install impala dest = %{buildroot}/%{libdir}"
 echo "test install impala dest = %{buildroot}/%{vardir}"
 echo "test install impala dest = %{buildroot}/%{confdir}"
+echo "test install impala dest = %{buildroot}/%{_libexecdir}"
+echo "test install impala dest = %{buildroot}/%{_defaultdocdir}"
 
 echo "test install impala label pkg_name = %{pkg_name}"
 
@@ -196,10 +200,14 @@ echo "ok - cleaning up temporary files, deleting %{buildroot}/%{_bindir}"
 echo "ok - cleaning up temporary files, deleting %{buildroot}/%{libdir}"
 echo "ok - cleaning up temporary files, deleting %{buildroot}/%{vardir}"
 echo "ok - cleaning up temporary files, deleting %{buildroot}/%{confdir}"
+echo "ok - cleaning up temporary files, deleting %{buildroot}/%{_libexecdir}"
+echo "ok - cleaning up temporary files, deleting %{buildroot}/%{_defaultdocdir}"
 rm -rf %{buildroot}%{_bindir}
 rm -rf %{buildroot}%{libdir}
 rm -rf %{buildroot}%{vardir}
 rm -rf %{buildroot}%{confdir}
+rm -rf %{buildroot}%{_libexecdir}
+rm -rf %{buildroot}%{_defaultdocdir}
 
 %files
 %defattr(0755,impala,impala,0755)
