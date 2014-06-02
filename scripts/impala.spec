@@ -146,10 +146,9 @@ echo "test install impala dest = %{buildroot}/%{vardir}"
 echo "test install impala dest = %{buildroot}/%{confdir}"
 echo "test install impala dest = %{buildroot}/%{_libexecdir}"
 echo "test install impala dest = %{buildroot}/%{_defaultdocdir}"
-
 echo "test install impala label pkg_name = %{pkg_name}"
 
-# %{__mkdir} -p %{buildroot}%{install_impala_dest}/
+# cp -rp %{_builddir}/%{service_name} %{buildroot}%{install_impala_dest}
 # TBD: remove this when we figure out all the necessary files that needs to be installed
 # cp -rp %{_builddir}/%{service_name} %{buildroot}%{install_impala_dest}
 
@@ -159,6 +158,11 @@ echo "java dir = %{_javadir}"
 echo "data dir = %{_datadir}"
 echo "libexec dir = %{_libexecdir}"
 echo "defaultdoc dir = %{_defaultdocdir}"
+
+install -dm 755 %{buildroot}%{install_impala_dest}/{bin,shell}
+
+cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-1.2.2/* %{buildroot}%{install_impala_dest}/shell/
+cp -rp %{_builddir}/%{service_name}/bin/* %{buildroot}%{install_impala_dest}/bin/
 
 # Incremental fix on installed files
 install -dm 755 %{buildroot}%{_bindir}
@@ -227,8 +231,9 @@ rm -rf %{buildroot}%{_defaultdocdir}
 
 %files
 %defattr(0755,impala,impala,0755)
-# %{install_impala_dest}
 %doc %{_defaultdocdir}/bigtop-utils-0.4+300/LICENSE
+%{install_impala_dest}/bin
+%{install_impala_dest}/shell
 %{_bindir}/*
 %{libdir}/llvm-ir/
 %{libdir}/lib/
