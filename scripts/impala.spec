@@ -23,7 +23,7 @@ Source: %{_sourcedir}/%{service_name}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%{service_name}
 Requires: vcc-hadoop-%{hadoop_ver}
 Requires: vcc-hive-%{hive_ver}
-Requires: jre >= 1.7
+Requires: jdk >= 1.7
 Requires: boost = 1.46.1
 BuildRequires: vcc-hadoop-%{hadoop_ver} >= 2.2.0
 BuildRequires: vcc-hive-%{hive_ver} >= 0.12.0
@@ -252,12 +252,18 @@ rm -rf %{buildroot}%{_defaultdocdir}
 #Install libhdfs and libhadoop to /usr/lib/impala/lib/
 ln -s /opt/hadoop-%{hadoop_ver}/lib/native/libhadoop.so.1.0.0  %{libdir}/lib/libhadoop.so.1.0.0
 ln -s /opt/hadoop-%{hadoop_ver}/lib/native/libhdfs.so.0.0.0  %{libdir}/lib/libhdfs.so.0.0.0
+rm -f /opt/impala/%{service_name}-%{major_ver}
+rm -f /opt/impala
+ln -s /opt/%{service_name}-%{major_ver} /opt/impala
 
 %postun
 rm -f %{libdir}/lib/libhadoop.so.1.0.0
 rm -f %{libdir}/lib/libhdfs.so.0.0.0
+rm -f /opt/impala
 
 %changelog
+* Mon Jun 2 2014 Andrew Lee 20140602
+- update install and post macros to include more files and create links
 * Fri May 30 2014 Andrew Lee 20140530
 - Add sysconfig and license doc, add pre macro to soft create user and group
 * Wed May 28 2014 Andrew Lee 20140528
