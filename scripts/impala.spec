@@ -2,6 +2,7 @@
 %global impala_gid          411460016
 %global impala_user         impala
 %global libdir              /usr/lib/impala/
+%global shell_libdir        /usr/lib/impala-shell/
 %global vardir              %{_localstatedir}
 %global confdir             %{_sysconfdir}
 
@@ -159,14 +160,13 @@ echo "data dir = %{_datadir}"
 echo "libexec dir = %{_libexecdir}"
 echo "defaultdoc dir = %{_defaultdocdir}"
 
-install -dm 755 %{buildroot}%{install_impala_dest}/{bin,shell}
-
-cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-1.2.2/* %{buildroot}%{install_impala_dest}/shell/
+install -dm 755 %{buildroot}%{install_impala_dest}/bin/
 cp -rp %{_builddir}/%{service_name}/bin/* %{buildroot}%{install_impala_dest}/bin/
 
 # Incremental fix on installed files
 install -dm 755 %{buildroot}%{_bindir}
 install -dm 755 %{buildroot}%{libdir}
+install -dm 755 %{buildroot}%{shell_libdir}/{ext-py,gen-py,lib}
 install -dm 755 %{buildroot}%{vardir}
 install -dm 755 %{buildroot}%{libdir}/{sbin-debug,llvm-ir,lib,www}
 install -dm 755 %{buildroot}%{vardir}/{log,run,lib}
@@ -183,6 +183,13 @@ install -dm 755 %{buildroot}%{_defaultdocdir}/bigtop-utils-0.4+300/
 install -p -m 755 %{_builddir}/%{service_name}/be/build/release/service/impalad %{buildroot}%{_bindir}/
 install -p -m 755 %{_builddir}/%{service_name}/be/build/release/catalog/catalogd %{buildroot}%{_bindir}/
 install -p -m 755 %{_builddir}/%{service_name}/be/build/release/statestore/statestored %{buildroot}%{_bindir}/
+
+# Install impala-shell binaries and libs
+install -p -m 755 %{_builddir}/%{service_name}/shell/build/impala-shell-1.2.2/impala-shell %{buildroot}%{_bindir}/
+cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-1.2.2/ext-py/* %{buildroot}%{shell_libdir}/ext-py/
+cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-1.2.2/gen-py/* %{buildroot}%{shell_libdir}/gen-py/
+cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-1.2.2/lib/* %{buildroot}%{shell_libdir}/lib/
+install -p -m 755  %{_builddir}/%{service_name}/shell/build/impala-shell-1.2.2/impala_shell.py %{buildroot}%{shell_libdir}/
 
 install -p -m 755 %{_builddir}/%{service_name}/llvm-ir/test-loop.ir %{buildroot}%{libdir}/llvm-ir/test-loop.ir
 install -p -m 755 %{_builddir}/%{service_name}/llvm-ir/impala-no-sse.ll %{buildroot}%{libdir}/llvm-ir/impala-no-sse.ll
@@ -233,12 +240,15 @@ rm -rf %{buildroot}%{_defaultdocdir}
 %defattr(0755,impala,impala,0755)
 %doc %{_defaultdocdir}/bigtop-utils-0.4+300/LICENSE
 %{install_impala_dest}/bin
-%{install_impala_dest}/shell
 %{_bindir}/*
 %{libdir}/llvm-ir/
 %{libdir}/lib/
 %{libdir}/www/
 %{libdir}/sbin-debug/
+%{shell_libdir}/impala_shell.py
+%{shell_libdir}/ext-py/
+%{shell_libdir}/gen-py/
+%{shell_libdir}/lib/
 %{confdir}/default/impala
 %{confdir}/default/bigtop-utils
 %{confdir}/security/limits.d/impala.conf
