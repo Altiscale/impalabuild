@@ -195,11 +195,14 @@ install -p -m 755 %{_builddir}/%{service_name}/llvm-ir/test-loop.ir %{buildroot}
 install -p -m 755 %{_builddir}/%{service_name}/llvm-ir/impala-no-sse.ll %{buildroot}%{libdir}/llvm-ir/impala-no-sse.ll
 install -p -m 755 %{_builddir}/%{service_name}/llvm-ir/impala-sse.ll %{buildroot}%{libdir}/llvm-ir/impala-sse.ll
 
+# Commented out the follow 3 binaries since they are identical, if we have a debug build, we will need to use those with
+# the symbols here instead of the release binaries.
+# install -p -m 755 %{_builddir}/%{service_name}/be/build/release/service/impalad %{buildroot}%{libdir}/sbin-debug/
+# install -p -m 755 %{_builddir}/%{service_name}/be/build/release/catalog/catalogd %{buildroot}%{libdir}/sbin-debug/
+# install -p -m 755 %{_builddir}/%{service_name}/be/build/release/statestore/statestored %{buildroot}%{libdir}/sbin-debug/
+
 install -p -m 755 %{_builddir}/%{service_name}/be/build/release/service/libfesupport.so %{buildroot}%{libdir}/sbin-debug/
-install -p -m 755 %{_builddir}/%{service_name}/be/build/release/service/impalad %{buildroot}%{libdir}/sbin-debug/
-install -p -m 755 %{_builddir}/%{service_name}/be/build/release/catalog/catalogd %{buildroot}%{libdir}/sbin-debug/
 install -p -m 755 %{_builddir}/%{service_name}/be/build/release/util/libloggingsupport.so %{buildroot}%{libdir}/sbin-debug/
-install -p -m 755 %{_builddir}/%{service_name}/be/build/release/statestore/statestored %{buildroot}%{libdir}/sbin-debug/
 install -p -m 755 %{_builddir}/%{service_name}/be/build/release/service/session-expiry-test %{buildroot}%{libdir}/sbin-debug/
 
 # Copy bootstrap doc
@@ -265,11 +268,17 @@ ln -s /opt/hadoop-%{hadoop_ver}/lib/native/libhdfs.so.0.0.0  %{libdir}/lib/libhd
 rm -f /opt/impala/%{service_name}-%{major_ver}
 rm -f /opt/impala
 ln -s /opt/%{service_name}-%{major_ver} /opt/impala
+ln -s %{_bindir}/impalad %{libdir}/sbin-debug/impalad
+ln -s %{_bindir}/catalogd %{libdir}/sbin-debug/catalogd
+ln -s %{_bindir}/statestored %{libdir}/sbin-debug/statestored
 
 %postun
 rm -f %{libdir}/lib/libhadoop.so.1.0.0
 rm -f %{libdir}/lib/libhdfs.so.0.0.0
 rm -f /opt/impala
+rm -f %{libdir}/sbin-debug/impalad
+rm -f %{libdir}/sbin-debug/catalogd
+rm -f %{libdir}/sbin-debug/statestored
 
 %changelog
 * Mon Jun 2 2014 Andrew Lee 20140602
