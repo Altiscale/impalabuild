@@ -248,7 +248,7 @@ rm -rf %{buildroot}%{_defaultdocdir}
 %{libdir}/lib/
 %{libdir}/www/
 %{libdir}/sbin-debug/
-%{shell_libdir}/impala_shell.py
+%{shell_libdir}/*
 %{shell_libdir}/ext-py/
 %{shell_libdir}/gen-py/
 %{shell_libdir}/lib/
