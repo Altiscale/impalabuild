@@ -263,10 +263,14 @@ rm -rf %{buildroot}%{_defaultdocdir}
 
 %post
 #Install libhdfs and libhadoop to /usr/lib/impala/lib/
+rm -f %{libdir}/lib/libhadoop.so.1.0.0
+rm -f %{libdir}/lib/libhdfs.so.0.0.0
+rm -f /opt/impala
+rm -f %{libdir}/sbin-debug/impalad
+rm -f %{libdir}/sbin-debug/catalogd
+rm -f %{libdir}/sbin-debug/statestored
 ln -s /opt/hadoop-%{hadoop_ver}/lib/native/libhadoop.so.1.0.0  %{libdir}/lib/libhadoop.so.1.0.0
 ln -s /opt/hadoop-%{hadoop_ver}/lib/native/libhdfs.so.0.0.0  %{libdir}/lib/libhdfs.so.0.0.0
-rm -f /opt/impala/%{service_name}-%{major_ver}
-rm -f /opt/impala
 ln -s /opt/%{service_name}-%{major_ver} /opt/impala
 ln -s %{_bindir}/impalad %{libdir}/sbin-debug/impalad
 ln -s %{_bindir}/catalogd %{libdir}/sbin-debug/catalogd
