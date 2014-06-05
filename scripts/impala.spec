@@ -161,6 +161,7 @@ echo "libexec dir = %{_libexecdir}"
 echo "defaultdoc dir = %{_defaultdocdir}"
 
 install -dm 755 %{buildroot}%{install_impala_dest}/bin/
+install -dm 755 %{buildroot}%{install_impala_dest}/etc/rc.d/init.d/
 cp -rp %{_builddir}/%{service_name}/bin/* %{buildroot}%{install_impala_dest}/bin/
 
 # Incremental fix on installed files
@@ -220,9 +221,9 @@ popd
 install -p -m 755 %{_builddir}/%{service_name}/%{confdir}/default/impala %{buildroot}%{confdir}/default/impala
 install -p -m 755 %{_builddir}/%{service_name}/%{confdir}/default/bigtop-utils %{buildroot}%{confdir}/default/bigtop-utils
 install -p -m 755 %{_builddir}/%{service_name}/%{confdir}/security/limits.d/impala.conf %{buildroot}%{confdir}/security/limits.d/impala.conf
-install -p -m 755 %{_builddir}/%{service_name}/%{confdir}/rc.d/init.d/impala-server %{buildroot}%{confdir}/init.d/impala-server
-install -p -m 755 %{_builddir}/%{service_name}/%{confdir}/rc.d/init.d/impala-catalog %{buildroot}%{confdir}/init.d/impala-catalog
-install -p -m 755 %{_builddir}/%{service_name}/%{confdir}/rc.d/init.d/impala-state-store %{buildroot}%{confdir}/init.d/impala-state-store
+install -p -m 755 %{_builddir}/%{service_name}/%{confdir}/rc.d/init.d/impala-server %{buildroot}%{install_impala_dest}%{confdir}/rc.d/init.d/impala-server
+install -p -m 755 %{_builddir}/%{service_name}/%{confdir}/rc.d/init.d/impala-catalog %{buildroot}%{install_impala_dest}%{confdir}/rc.d/init.d/impala-catalog
+install -p -m 755 %{_builddir}/%{service_name}/%{confdir}/rc.d/init.d/impala-state-store %{buildroot}%{install_impala_dest}%{confdir}/rc.d/init.d/impala-state-store
 install -p -m 755 %{_builddir}/%{service_name}/%{confdir}/security/limits.d/impala.conf %{buildroot}%{confdir}/security/limits.d/impala.conf
 install -p -m 755 %{_builddir}/%{service_name}/%{_libexecdir}/bigtop-detect-javahome %{buildroot}%{_libexecdir}/bigtop-detect-javahome
 install -p -m 755 %{_builddir}/%{service_name}/%{_defaultdocdir}/bigtop-utils-0.4+300/LICENSE %{buildroot}%{_defaultdocdir}/bigtop-utils-0.4+300/LICENSE
@@ -248,6 +249,7 @@ rm -rf %{buildroot}%{_defaultdocdir}
 %defattr(0755,impala,impala,0755)
 %doc %{_defaultdocdir}/bigtop-utils-0.4+300/LICENSE
 %{install_impala_dest}/bin
+%{install_impala_dest}%{confdir}/rc.d/init.d/*
 %{_bindir}/*
 %{libdir}/llvm-ir/
 %{libdir}/lib/
@@ -257,7 +259,6 @@ rm -rf %{buildroot}%{_defaultdocdir}
 %{shell_libdir}/ext-py/
 %{shell_libdir}/gen-py/
 %{shell_libdir}/lib/
-%{confdir}/init.d/*
 %{confdir}/default/impala
 %{confdir}/default/bigtop-utils
 %{confdir}/security/limits.d/impala.conf
