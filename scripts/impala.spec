@@ -249,7 +249,7 @@ rm -rf %{buildroot}%{_defaultdocdir}
 %defattr(0755,impala,impala,0755)
 %doc %{_defaultdocdir}/bigtop-utils-0.4+300/LICENSE
 %{install_impala_dest}/bin
-%{install_impala_dest}%{confdir}/rc.d/init.d/*
+%{install_impala_dest}%{confdir}
 %{_bindir}/*
 %{libdir}/llvm-ir/
 %{libdir}/lib/
