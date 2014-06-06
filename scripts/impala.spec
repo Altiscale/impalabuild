@@ -1,6 +1,6 @@
+%global impala_user         impala
 %global impala_uid          411460044
 %global impala_gid          411460016
-%global impala_user         impala
 %global libdir              /usr/lib/impala/
 %global shell_libdir        /usr/lib/impala-shell/
 %global vardir              %{_localstatedir}
@@ -21,11 +21,13 @@ Version: %{major_ver}
 Release: %{build_release}%{?dist}
 License: Copyright (C) 2014 Altiscale. All rights reserved.
 Source: %{_sourcedir}/%{service_name}.tar.gz
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%{service_name}
+BuildRoot: %{_tmppath}/%{name}-%{release}-root-%{service_name}
 Requires: vcc-hadoop-%{hadoop_ver}
 Requires: vcc-hive-%{hive_ver}
 Requires: jdk >= 1.7
 Requires: boost = 1.46.1
+# For init.d script and chkconfig
+Requires: redhat-lsb >= 4.0
 BuildRequires: vcc-hadoop-%{hadoop_ver} >= 2.2.0
 BuildRequires: vcc-hive-%{hive_ver} >= 0.12.0
 BuildRequires: boost = 1.46.1
