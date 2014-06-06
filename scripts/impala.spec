@@ -210,7 +210,11 @@ install -p -m 755 %{_builddir}/%{service_name}/be/build/release/service/session-
 # Copy bootstrap doc
 cp -rp %{_builddir}/%{service_name}/www/* %{buildroot}%{libdir}/www/
 
+# .so .a libraries
+install -p -m 644 "%{_builddir}/%{service_name}/thirdparty/snappy-1.0.5/.libs/libsnappy.so.1.1.3" %{buildroot}%{libdir}/lib/
+
 pushd %{_builddir}/%{service_name}/fe/target/dependency/
+   install -p -m 644 "%{_builddir}/%{service_name}/fe/target/impala-frontend-0.1-SNAPSHOT.jar" %{buildroot}%{libdir}/lib/
    for i in *.jar
    do
       install -p -m 644 "%{_builddir}/%{service_name}/fe/target/dependency/$i" %{buildroot}%{libdir}/lib/
