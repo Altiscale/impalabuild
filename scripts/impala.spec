@@ -182,7 +182,6 @@ install -dm 755 %{buildroot}%{confdir}/security/limits.d/
 install -dm 755 %{buildroot}%{confdir}/init.d/
 # The following 2 folders only exist in 1.2.2 (1.2.4, and further version don't have these 2 anymore from bigtop)
 install -dm 755 %{buildroot}%{_libexecdir}/
-install -dm 755 %{buildroot}%{_defaultdocdir}/bigtop-utils-0.4+300/
 
 install -p -m 755 %{_builddir}/%{service_name}/be/build/release/service/impalad %{buildroot}%{_bindir}/
 install -p -m 755 %{_builddir}/%{service_name}/be/build/release/catalog/catalogd %{buildroot}%{_bindir}/
@@ -225,14 +224,11 @@ popd
 
 # Install system config and license
 install -p -m 755 %{_builddir}/%{service_name}/%{confdir}/default/impala %{buildroot}%{confdir}/default/impala
-install -p -m 755 %{_builddir}/%{service_name}/%{confdir}/default/bigtop-utils %{buildroot}%{confdir}/default/bigtop-utils
 install -p -m 755 %{_builddir}/%{service_name}/%{confdir}/security/limits.d/impala.conf %{buildroot}%{confdir}/security/limits.d/impala.conf
 install -p -m 755 %{_builddir}/%{service_name}/%{confdir}/rc.d/init.d/impala-server %{buildroot}%{install_impala_dest}%{confdir}/rc.d/init.d/impala-server
 install -p -m 755 %{_builddir}/%{service_name}/%{confdir}/rc.d/init.d/impala-catalog %{buildroot}%{install_impala_dest}%{confdir}/rc.d/init.d/impala-catalog
 install -p -m 755 %{_builddir}/%{service_name}/%{confdir}/rc.d/init.d/impala-state-store %{buildroot}%{install_impala_dest}%{confdir}/rc.d/init.d/impala-state-store
 install -p -m 755 %{_builddir}/%{service_name}/%{confdir}/security/limits.d/impala.conf %{buildroot}%{confdir}/security/limits.d/impala.conf
-install -p -m 755 %{_builddir}/%{service_name}/%{_libexecdir}/bigtop-detect-javahome %{buildroot}%{_libexecdir}/bigtop-detect-javahome
-install -p -m 755 %{_builddir}/%{service_name}/%{_defaultdocdir}/bigtop-utils-0.4+300/LICENSE %{buildroot}%{_defaultdocdir}/bigtop-utils-0.4+300/LICENSE
 
 
 %clean
@@ -253,7 +249,6 @@ rm -rf %{buildroot}%{_defaultdocdir}
 
 %files
 %defattr(0755,impala,impala,0755)
-%doc %{_defaultdocdir}/bigtop-utils-0.4+300/LICENSE
 %{install_impala_dest}/bin
 %{install_impala_dest}%{confdir}
 %{_bindir}/*
@@ -266,9 +261,7 @@ rm -rf %{buildroot}%{_defaultdocdir}
 %{shell_libdir}/gen-py/
 %{shell_libdir}/lib/
 %{confdir}/default/impala
-%{confdir}/default/bigtop-utils
 %{confdir}/security/limits.d/impala.conf
-%{_libexecdir}/bigtop-detect-javahome
 %dir %{vardir}/lib/impala
 %dir %{vardir}/run/impala
 %dir %{vardir}/log/impala
