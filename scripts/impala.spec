@@ -26,6 +26,9 @@ Requires: vcc-hadoop-%{hadoop_ver}
 Requires: vcc-hive-%{hive_ver}
 Requires: jdk >= 1.7
 Requires: boost = 1.46.1
+Requires: cyrus-sasl-devel >= 2.1.23
+Requires: cyrus-sasl-gssapi >= 2.1.23
+Requires: python-setuptools >= 0.6.10
 # For init.d script and chkconfig
 Requires: redhat-lsb >= 4.0
 BuildRequires: vcc-hadoop-%{hadoop_ver} >= 2.2.0
