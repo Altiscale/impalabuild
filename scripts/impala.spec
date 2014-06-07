@@ -15,7 +15,7 @@
 %define install_impala_dest /opt/%{pkg_name}
 %define build_release       BUILD_TIME
 
-Name: %{service_name}-%{major_ver}
+Name: %{service_name}
 Summary: %{pkg_name} RPM Installer
 Version: %{major_ver}
 Release: %{build_release}%{?dist}
