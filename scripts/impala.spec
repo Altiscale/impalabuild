@@ -188,11 +188,11 @@ install -p -m 755 %{_builddir}/%{service_name}/be/build/release/catalog/catalogd
 install -p -m 755 %{_builddir}/%{service_name}/be/build/release/statestore/statestored %{buildroot}%{_bindir}/
 
 # Install impala-shell binaries and libs
-install -p -m 755 %{_builddir}/%{service_name}/shell/build/impala-shell-1.2.2/impala-shell %{buildroot}%{_bindir}/
-cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-1.2.2/ext-py/* %{buildroot}%{shell_libdir}/ext-py/
-cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-1.2.2/gen-py/* %{buildroot}%{shell_libdir}/gen-py/
-cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-1.2.2/lib/* %{buildroot}%{shell_libdir}/lib/
-install -p -m 755  %{_builddir}/%{service_name}/shell/build/impala-shell-1.2.2/impala_shell.py %{buildroot}%{shell_libdir}/
+install -p -m 755 %{_builddir}/%{service_name}/shell/build/impala-shell-%{major_ver}/impala-shell %{buildroot}%{_bindir}/
+cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-%{major_ver}/ext-py/* %{buildroot}%{shell_libdir}/ext-py/
+cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-%{major_ver}/gen-py/* %{buildroot}%{shell_libdir}/gen-py/
+cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-%{major_ver}/lib/* %{buildroot}%{shell_libdir}/lib/
+install -p -m 755  %{_builddir}/%{service_name}/shell/build/impala-shell-%{major_ver}/impala_shell.py %{buildroot}%{shell_libdir}/
 
 install -p -m 755 %{_builddir}/%{service_name}/llvm-ir/test-loop.ir %{buildroot}%{libdir}/llvm-ir/test-loop.ir
 install -p -m 755 %{_builddir}/%{service_name}/llvm-ir/impala-no-sse.ll %{buildroot}%{libdir}/llvm-ir/impala-no-sse.ll
