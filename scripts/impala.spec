@@ -15,13 +15,13 @@
 %define install_impala_dest /opt/%{pkg_name}
 %define build_release       BUILD_TIME
 
-Name: %{service_name}
+Name: %{service_name}-%{major_ver}
 Summary: %{pkg_name} RPM Installer
 Version: %{major_ver}
 Release: %{build_release}%{?dist}
 License: Copyright (C) 2014 Altiscale. All rights reserved.
 Source: %{_sourcedir}/%{service_name}.tar.gz
-BuildRoot: %{_tmppath}/%{name}-%{release}-root-%{service_name}
+BuildRoot: %{_tmppath}/%{name}-%{major_ver}-%{release}-root-%{service_name}
 Requires: vcc-hadoop-%{hadoop_ver}
 Requires: vcc-hive-%{hive_ver}
 Requires: jdk >= 1.7
