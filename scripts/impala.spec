@@ -29,6 +29,7 @@ Requires: boost = 1.46.1
 Requires: cyrus-sasl-devel >= 2.1.23
 Requires: cyrus-sasl-gssapi >= 2.1.23
 Requires: python-setuptools >= 0.6.10
+Requires: /sbin/ldconfig
 # For init.d script and chkconfig
 Requires: redhat-lsb >= 4.0
 BuildRequires: vcc-hadoop-%{hadoop_ver} >= 2.2.0
@@ -53,7 +54,6 @@ BuildRequires: zlib-devel >= 1.2.3
 BuildRequires: keyutils-libs-devel >= 1.4
 BuildRequires: doxygen >= 1.6.1
 BuildRequires: xz-lzma-compat >= 4.999.9
-# BuildRequires: java-1.7.0-openjdk-devel >= 1.7.0.51
 BuildRequires: jdk >= 1.7.0
 BuildRequires: wget >= 1.11
 BuildRequires: apache-maven >= 3.2.1
@@ -277,7 +277,7 @@ rm -rf %{buildroot}%{_defaultdocdir}
 %dir %{vardir}/log/impala
 %dir %{confdir}/impala/conf.dist/
 
-%post
+%post -p /sbin/ldconfig
 #Install libhdfs and libhadoop to /usr/lib/impala/lib/
 rm -f %{libdir}/lib/libhadoop.so.1.0.0
 rm -f %{libdir}/lib/libhdfs.so.0.0.0
@@ -292,7 +292,7 @@ ln -s %{_bindir}/impalad %{libdir}/sbin-debug/impalad
 ln -s %{_bindir}/catalogd %{libdir}/sbin-debug/catalogd
 ln -s %{_bindir}/statestored %{libdir}/sbin-debug/statestored
 
-%postun
+%postun -p /sbin/ldconfig
 rm -f %{libdir}/lib/libhadoop.so.1.0.0
 rm -f %{libdir}/lib/libhdfs.so.0.0.0
 rm -f /opt/impala
