@@ -123,8 +123,8 @@ if [ $? -ne "0" ] ; then
   exit -96
 fi
 
-stat "$WORKSPACE/rpmbuild/SRPMS/alti-impala-${IMPALA_VERSION}-${BUILD_TIME}.el6.src.rpm"
-rpm -ivvv "$WORKSPACE/rpmbuild/SRPMS/alti-impala-${IMPALA_VERSION}-${BUILD_TIME}.el6.src.rpm"
+stat "$WORKSPACE/rpmbuild/SRPMS/alti-impala-${IMPALA_VERSION}-${IMPALA_VERSION}-${BUILD_TIME}.el6.src.rpm"
+rpm -ivvv "$WORKSPACE/rpmbuild/SRPMS/alti-impala-${IMPALA_VERSION}-${IMPALA_VERSION}-${BUILD_TIME}.el6.src.rpm"
 
 echo "ok - applying $WORKSPACE for the new BASEDIR for mock, pattern delimiter here should be :"
 # the path includeds /, so we need a diff pattern delimiter
@@ -137,7 +137,12 @@ sed "s:BASEDIR:$WORKSPACE:g" "$mock_cfg" > "$curr_dir/$mock_cfg_runtime"
 sed -i "s:IMPALA_VERSION:$IMPALA_VERSION:g" "$curr_dir/$mock_cfg_runtime"
 echo "ok - applying mock config $curr_dir/$mock_cfg_runtime"
 cat "$curr_dir/$mock_cfg_runtime"
-mock -vvv --configdir=$curr_dir -r altiscale-impala-centos-6-x86_64.runtime --resultdir=$WORKSPACE/rpmbuild/RPMS/ --rebuild $WORKSPACE/rpmbuild/SRPMS/alti-impala-${IMPALA_VERSION}-${BUILD_TIME}.el6.src.rpm
+
+mock -vvv --configdir=$curr_dir -r altiscale-impala-centos-6-x86_64.runtime --init
+
+mock -vvv --configdir=$curr_dir -r altiscale-impala-centos-6-x86_64.runtime --no-clean --no-cleanup-after --install $WORKSPACE/rpmbuild/RPMS/noarch/alti-maven-settings-1.0-1.el6.noarch.rpm
+
+mock -vvv --configdir=$curr_dir -r altiscale-impala-centos-6-x86_64.runtime --no-clean --rpmbuild_timeout=$build_timeout --resultdir=$WORKSPACE/rpmbuild/RPMS/ --rebuild $WORKSPACE/rpmbuild/SRPMS/alti-impala-${IMPALA_VERSION}-${IMPALA_VERSION}-${BUILD_TIME}.el6.src.rpm
 
 if [ $? -ne "0" ] ; then
   echo "fail - mock RPM build failed"
