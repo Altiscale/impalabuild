@@ -14,8 +14,8 @@
 %global shell_libdir        /usr/lib/impala-shell
 %global vardir              %{_localstatedir}
 %global confdir             %{_sysconfdir}
-%global impala_libdir       %{libdir}/%{major_ver}/
-%global impala_shell_libdir %{shell_libdir}/%{major_ver}/
+%global impala_libdir       %{libdir}-%{major_ver}/
+%global impala_shell_libdir %{shell_libdir}-%{major_ver}/
 
 Name: %{service_name}-%{major_ver}
 Summary: %{pkg_name} RPM Installer
@@ -150,6 +150,7 @@ echo "test installtion folder (aka buildroot) is RPM_BUILD_ROOT = %{buildroot}"
 
 echo "test install impala dest = %{buildroot}/%{_bindir}"
 echo "test install impala dest = %{buildroot}/%{impala_libdir}"
+echo "test install impala dest = %{buildroot}/%{impala_shell_libdir}"
 echo "test install impala dest = %{buildroot}/%{vardir}"
 echo "test install impala dest = %{buildroot}/%{confdir}-%{major_ver}"
 echo "test install impala dest = %{buildroot}/%{_libexecdir}"
@@ -285,14 +286,16 @@ rm -f %{impala_libdir}/sbin-debug/statestored
 rm -f %{_bindir}/impalad
 rm -f %{_bindir}/catalogd
 rm -f %{_bindir}/statestored
+rm -f %{_bindir}/impala-shell
 rm -f %{confdir}/impala/conf
 rm -f %{confdir}/default/impala
 rm -f %{confdir}/security/limits.d/impala.conf
-rm -f %{vardir}/lib/impala
-rm -f %{vardir}/run/impala
-rm -f %{vardir}/log/impala
-rm -f %{libdir}
-rm -f %{shell_libdir}
+# Force delete and fix it with symbolic link
+rm -rf %{vardir}/lib/impala
+rm -rf %{vardir}/run/impala
+rm -rf %{vardir}/log/impala
+rm -rf %{libdir}
+rm -rf %{shell_libdir}
 
 ln -s /opt/hadoop-%{hadoop_ver}/lib/native/libhadoop.so.1.0.0  %{impala_libdir}/lib/libhadoop.so.1.0.0
 ln -s /opt/hadoop-%{hadoop_ver}/lib/native/libhdfs.so.0.0.0  %{impala_libdir}/lib/libhdfs.so.0.0.0
@@ -303,6 +306,7 @@ ln -s %{_bindir}/statestored-%{major_ver} %{impala_libdir}/sbin-debug/statestore
 ln -s %{_bindir}/impalad-%{major_ver} %{_bindir}/impalad
 ln -s %{_bindir}/catalogd-%{major_ver} %{_bindir}/catalogd
 ln -s %{_bindir}/statestored-%{major_ver} %{_bindir}/statestored
+ln -s %{_bindir}/impala-shell-%{major_ver} %{_bindir}/impala-shell
 
 ln -s %{confdir}/impala/conf.dist/%{major_ver} %{confdir}/impala/conf
 ln -s %{confdir}/default/impala-%{major_ver} %{confdir}/default/impala
@@ -311,8 +315,8 @@ ln -s %{vardir}/lib/impala-%{major_ver} %{vardir}/lib/impala
 ln -s %{vardir}/run/impala-%{major_ver} %{vardir}/run/impala
 ln -s %{vardir}/log/impala-%{major_ver} %{vardir}/log/impala
 
-ln -s %{impala_shell_libdir}/ %{shell_libdir}/
-ln -s %{impala_libdir}/ %{libdir}/
+ln -s %{impala_shell_libdir} %{shell_libdir}
+ln -s %{impala_libdir} %{libdir}
 exit 0
 
 %postun
