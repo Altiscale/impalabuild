@@ -1,11 +1,3 @@
-%global impala_user         impala
-%global impala_uid          411460044
-%global impala_gid          411460016
-%global libdir              /usr/lib/impala/
-%global shell_libdir        /usr/lib/impala-shell/
-%global vardir              %{_localstatedir}
-%global confdir             %{_sysconfdir}
-
 %define major_ver           IMPALA_VERSION
 %define hadoop_ver          HADOOP_VERSION_REPLACE
 %define hive_ver            HIVE_VERSION_REPLACE
@@ -14,6 +6,16 @@
 %define pkg_name            %{service_name}-%{major_ver}
 %define install_impala_dest /opt/%{pkg_name}
 %define build_release       BUILD_TIME
+
+%global impala_user         impala
+%global impala_uid          411460044
+%global impala_gid          411460016
+%global libdir              /usr/lib/impala
+%global shell_libdir        /usr/lib/impala-shell
+%global vardir              %{_localstatedir}
+%global confdir             %{_sysconfdir}
+%global impala_libdir       %{libdir}/%{major_ver}/
+%global impala_shell_libdir %{shell_libdir}/%{major_ver}/
 
 Name: %{service_name}-%{major_ver}
 Summary: %{pkg_name} RPM Installer
@@ -135,9 +137,10 @@ echo "Build Completed successfully!"
 %install
 # manual cleanup for compatibility, and to be safe if the %clean isn't implemented
 rm -rf %{buildroot}%{_bindir}
-rm -rf %{buildroot}%{libdir}
+rm -rf %{buildroot}%{impala_libdir}
+rm -rf %{buildroot}%{impala_shell_libdir}
 rm -rf %{buildroot}%{vardir}
-rm -rf %{buildroot}%{confdir}
+rm -rf %{buildroot}%{confdir}-%{major_ver}
 rm -rf %{buildroot}%{_libexecdir}
 rm -rf %{buildroot}%{_defaultdocdir}
 
@@ -146,9 +149,9 @@ echo "compiled/built folder is (not the same as buildroot) RPM_BUILD_DIR = %{_bu
 echo "test installtion folder (aka buildroot) is RPM_BUILD_ROOT = %{buildroot}"
 
 echo "test install impala dest = %{buildroot}/%{_bindir}"
-echo "test install impala dest = %{buildroot}/%{libdir}"
+echo "test install impala dest = %{buildroot}/%{impala_libdir}"
 echo "test install impala dest = %{buildroot}/%{vardir}"
-echo "test install impala dest = %{buildroot}/%{confdir}"
+echo "test install impala dest = %{buildroot}/%{confdir}-%{major_ver}"
 echo "test install impala dest = %{buildroot}/%{_libexecdir}"
 echo "test install impala dest = %{buildroot}/%{_defaultdocdir}"
 echo "test install impala label pkg_name = %{pkg_name}"
@@ -170,79 +173,81 @@ cp -rp %{_builddir}/%{service_name}/bin/* %{buildroot}%{install_impala_dest}/bin
 
 # Incremental fix on installed files
 install -dm 755 %{buildroot}%{_bindir}
-install -dm 755 %{buildroot}%{libdir}
-install -dm 755 %{buildroot}%{shell_libdir}/{ext-py,gen-py,lib}
+install -dm 755 %{buildroot}%{impala_libdir}
+install -dm 755 %{buildroot}%{impala_shell_libdir}/{ext-py,gen-py,lib}
 install -dm 755 %{buildroot}%{vardir}
-install -dm 755 %{buildroot}%{libdir}/{sbin-debug,llvm-ir,lib,www}
+install -dm 755 %{buildroot}%{impala_libdir}/{sbin-debug,llvm-ir,lib,www}
 install -dm 755 %{buildroot}%{vardir}/{log,run,lib}
-install -dm 755 %{buildroot}%{vardir}/log/impala
-install -dm 755 %{buildroot}%{vardir}/run/impala
-install -dm 755 %{buildroot}%{vardir}/lib/impala
-install -dm 755 %{buildroot}%{confdir}/impala/conf.dist/
+install -dm 755 %{buildroot}%{vardir}/log/impala-%{major_ver}
+install -dm 755 %{buildroot}%{vardir}/run/impala-%{major_ver}
+install -dm 755 %{buildroot}%{vardir}/lib/impala-%{major_ver}
+install -dm 755 %{buildroot}%{confdir}/impala/conf.dist/%{major_ver}/
 install -dm 755 %{buildroot}%{confdir}/default/
 install -dm 755 %{buildroot}%{confdir}/security/limits.d/
 install -dm 755 %{buildroot}%{confdir}/init.d/
 install -dm 755 %{buildroot}%{_libexecdir}/
 
-install -p -m 755 %{_builddir}/%{service_name}/be/build/release/service/impalad %{buildroot}%{_bindir}/
-install -p -m 755 %{_builddir}/%{service_name}/be/build/release/catalog/catalogd %{buildroot}%{_bindir}/
-install -p -m 755 %{_builddir}/%{service_name}/be/build/release/statestore/statestored %{buildroot}%{_bindir}/
+install -p -m 755 %{_builddir}/%{service_name}/be/build/release/service/impalad %{buildroot}%{_bindir}/impalad-%{major_ver}
+install -p -m 755 %{_builddir}/%{service_name}/be/build/release/catalog/catalogd %{buildroot}%{_bindir}/catalogd-%{major_ver}
+install -p -m 755 %{_builddir}/%{service_name}/be/build/release/statestore/statestored %{buildroot}%{_bindir}/statestored-%{major_ver}
 
 # Install impala-shell binaries and libs
-install -p -m 755 %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.0-INTERNAL/impala-shell %{buildroot}%{_bindir}/
-cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.0-INTERNAL/ext-py/* %{buildroot}%{shell_libdir}/ext-py/
-cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.0-INTERNAL/gen-py/* %{buildroot}%{shell_libdir}/gen-py/
-cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.0-INTERNAL/lib/* %{buildroot}%{shell_libdir}/lib/
-install -p -m 755  %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.0-INTERNAL/impala_shell.py %{buildroot}%{shell_libdir}/
+install -p -m 755 %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.0-INTERNAL/impala-shell %{buildroot}%{_bindir}/impala-shell-%{major_ver}
+cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.0-INTERNAL/ext-py/* %{buildroot}%{impala_shell_libdir}/ext-py/
+cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.0-INTERNAL/gen-py/* %{buildroot}%{impala_shell_libdir}/gen-py/
+cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.0-INTERNAL/lib/* %{buildroot}%{impala_shell_libdir}/lib/
+install -p -m 755  %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.0-INTERNAL/impala_shell.py %{buildroot}%{impala_shell_libdir}/
 
-install -p -m 755 %{_builddir}/%{service_name}/llvm-ir/test-loop.ir %{buildroot}%{libdir}/llvm-ir/test-loop.ir
-install -p -m 755 %{_builddir}/%{service_name}/llvm-ir/impala-no-sse.ll %{buildroot}%{libdir}/llvm-ir/impala-no-sse.ll
-install -p -m 755 %{_builddir}/%{service_name}/llvm-ir/impala-sse.ll %{buildroot}%{libdir}/llvm-ir/impala-sse.ll
+install -p -m 755 %{_builddir}/%{service_name}/llvm-ir/test-loop.ir %{buildroot}%{impala_libdir}/llvm-ir/test-loop.ir
+install -p -m 755 %{_builddir}/%{service_name}/llvm-ir/impala-no-sse.ll %{buildroot}%{impala_libdir}/llvm-ir/impala-no-sse.ll
+install -p -m 755 %{_builddir}/%{service_name}/llvm-ir/impala-sse.ll %{buildroot}%{impala_libdir}/llvm-ir/impala-sse.ll
 
 # Commented out the follow 3 binaries since they are identical, if we have a debug build, we will need to use those with
 # the symbols here instead of the release binaries.
-# install -p -m 755 %{_builddir}/%{service_name}/be/build/release/service/impalad %{buildroot}%{libdir}/sbin-debug/
-# install -p -m 755 %{_builddir}/%{service_name}/be/build/release/catalog/catalogd %{buildroot}%{libdir}/sbin-debug/
-# install -p -m 755 %{_builddir}/%{service_name}/be/build/release/statestore/statestored %{buildroot}%{libdir}/sbin-debug/
+# install -p -m 755 %{_builddir}/%{service_name}/be/build/release/service/impalad %{buildroot}%{impala_libdir}/sbin-debug/
+# install -p -m 755 %{_builddir}/%{service_name}/be/build/release/catalog/catalogd %{buildroot}%{impala_libdir}/sbin-debug/
+# install -p -m 755 %{_builddir}/%{service_name}/be/build/release/statestore/statestored %{buildroot}%{impala_libdir}/sbin-debug/
 
-install -p -m 755 %{_builddir}/%{service_name}/be/build/release/service/libfesupport.so %{buildroot}%{libdir}/sbin-debug/
-install -p -m 755 %{_builddir}/%{service_name}/be/build/release/util/libloggingsupport.so %{buildroot}%{libdir}/sbin-debug/
-install -p -m 755 %{_builddir}/%{service_name}/be/build/release/service/session-expiry-test %{buildroot}%{libdir}/sbin-debug/
+install -p -m 755 %{_builddir}/%{service_name}/be/build/release/service/libfesupport.so %{buildroot}%{impala_libdir}/sbin-debug/
+install -p -m 755 %{_builddir}/%{service_name}/be/build/release/util/libloggingsupport.so %{buildroot}%{impala_libdir}/sbin-debug/
+install -p -m 755 %{_builddir}/%{service_name}/be/build/release/service/session-expiry-test %{buildroot}%{impala_libdir}/sbin-debug/
 
 # Copy bootstrap doc
-cp -rp %{_builddir}/%{service_name}/www/* %{buildroot}%{libdir}/www/
+cp -rp %{_builddir}/%{service_name}/www/* %{buildroot}%{impala_libdir}/www/
 
 # .so .a libraries
-install -p -m 644 "%{_builddir}/%{service_name}/thirdparty/snappy-1.0.5/.libs/libsnappy.so.1.1.3" %{buildroot}%{libdir}/lib/
+install -p -m 644 "%{_builddir}/%{service_name}/thirdparty/snappy-1.0.5/.libs/libsnappy.so.1.1.3" %{buildroot}%{impala_libdir}/lib/
 
 pushd %{_builddir}/%{service_name}/fe/target/dependency/
-   install -p -m 644 "%{_builddir}/%{service_name}/fe/target/impala-frontend-0.1-SNAPSHOT.jar" %{buildroot}%{libdir}/lib/
+   install -p -m 644 "%{_builddir}/%{service_name}/fe/target/impala-frontend-0.1-SNAPSHOT.jar" %{buildroot}%{impala_libdir}/lib/
    for i in *.jar
    do
-      install -p -m 644 "%{_builddir}/%{service_name}/fe/target/dependency/$i" %{buildroot}%{libdir}/lib/
+      install -p -m 644 "%{_builddir}/%{service_name}/fe/target/dependency/$i" %{buildroot}%{impala_libdir}/lib/
    done
 popd
 
 # Install system config and license
-install -p -m 755 %{_builddir}/%{service_name}/%{confdir}/default/impala %{buildroot}%{confdir}/default/impala
-install -p -m 755 %{_builddir}/%{service_name}/%{confdir}/security/limits.d/impala.conf %{buildroot}%{confdir}/security/limits.d/impala.conf
+install -p -m 755 %{_builddir}/%{service_name}/%{confdir}/default/impala %{buildroot}%{confdir}/default/impala-%{major_ver}
+install -p -m 755 %{_builddir}/%{service_name}/%{confdir}/security/limits.d/impala.conf %{buildroot}%{confdir}/security/limits.d/impala.conf-%{major_ver}
+
 install -p -m 755 %{_builddir}/%{service_name}/%{confdir}/rc.d/init.d/impala-server %{buildroot}%{install_impala_dest}%{confdir}/rc.d/init.d/impala-server
 install -p -m 755 %{_builddir}/%{service_name}/%{confdir}/rc.d/init.d/impala-catalog %{buildroot}%{install_impala_dest}%{confdir}/rc.d/init.d/impala-catalog
 install -p -m 755 %{_builddir}/%{service_name}/%{confdir}/rc.d/init.d/impala-state-store %{buildroot}%{install_impala_dest}%{confdir}/rc.d/init.d/impala-state-store
-install -p -m 755 %{_builddir}/%{service_name}/%{confdir}/security/limits.d/impala.conf %{buildroot}%{confdir}/security/limits.d/impala.conf
 
 
 %clean
 # echo "ok - cleaning up temporary files, deleting %{buildroot}%{install_impala_dest}"
 # rm -rf %{buildroot}%{install_impala_dest}
 echo "ok - cleaning up temporary files, deleting %{buildroot}/%{_bindir}"
-echo "ok - cleaning up temporary files, deleting %{buildroot}/%{libdir}"
+echo "ok - cleaning up temporary files, deleting %{buildroot}/%{impala_libdir}"
+echo "ok - cleaning up temporary files, deleting %{buildroot}/%{impala_shell_libdir}"
 echo "ok - cleaning up temporary files, deleting %{buildroot}/%{vardir}"
 echo "ok - cleaning up temporary files, deleting %{buildroot}/%{confdir}"
 echo "ok - cleaning up temporary files, deleting %{buildroot}/%{_libexecdir}"
 echo "ok - cleaning up temporary files, deleting %{buildroot}/%{_defaultdocdir}"
 rm -rf %{buildroot}%{_bindir}
-rm -rf %{buildroot}%{libdir}
+rm -rf %{buildroot}%{impala_libdir}
+rm -rf %{buildroot}%{impala_shell_libdir}
 rm -rf %{buildroot}%{vardir}
 rm -rf %{buildroot}%{confdir}
 rm -rf %{buildroot}%{_libexecdir}
@@ -253,43 +258,72 @@ rm -rf %{buildroot}%{_defaultdocdir}
 %{install_impala_dest}/bin
 %{install_impala_dest}%{confdir}
 %{_bindir}/*
-%{libdir}/llvm-ir/
-%{libdir}/lib/
-%{libdir}/www/
-%{libdir}/sbin-debug/
-%{shell_libdir}/*
-%{shell_libdir}/ext-py/
-%{shell_libdir}/gen-py/
-%{shell_libdir}/lib/
-%{confdir}/default/impala
-%{confdir}/security/limits.d/impala.conf
-%dir %{vardir}/lib/impala
-%dir %{vardir}/run/impala
-%dir %{vardir}/log/impala
-%dir %{confdir}/impala/conf.dist/
+%{impala_libdir}/llvm-ir/
+%{impala_libdir}/lib/
+%{impala_libdir}/www/
+%{impala_libdir}/sbin-debug/
+%{impala_shell_libdir}/*
+%{impala_shell_libdir}/ext-py/
+%{impala_shell_libdir}/gen-py/
+%{impala_shell_libdir}/lib/
+%{confdir}/default/impala-%{major_ver}
+%{confdir}/security/limits.d/impala.conf-%{major_ver}
+%dir %{vardir}/lib/impala-%{major_ver}
+%dir %{vardir}/run/impala-%{major_ver}
+%dir %{vardir}/log/impala-%{major_ver}
+%dir %{confdir}/impala/conf.dist/%{major_ver}
 
-%post -p /sbin/ldconfig
+%post
+/sbin/ldconfig || exit 1
 #Install libhdfs and libhadoop to /usr/lib/impala/lib/
-rm -f %{libdir}/lib/libhadoop.so.1.0.0
-rm -f %{libdir}/lib/libhdfs.so.0.0.0
+rm -f %{impala_libdir}/lib/libhadoop.so.1.0.0
+rm -f %{impala_libdir}/lib/libhdfs.so.0.0.0
 rm -f /opt/impala
-rm -f %{libdir}/sbin-debug/impalad
-rm -f %{libdir}/sbin-debug/catalogd
-rm -f %{libdir}/sbin-debug/statestored
-ln -s /opt/hadoop-%{hadoop_ver}/lib/native/libhadoop.so.1.0.0  %{libdir}/lib/libhadoop.so.1.0.0
-ln -s /opt/hadoop-%{hadoop_ver}/lib/native/libhdfs.so.0.0.0  %{libdir}/lib/libhdfs.so.0.0.0
-ln -s /opt/%{service_name}-%{major_ver} /opt/impala
-ln -s %{_bindir}/impalad %{libdir}/sbin-debug/impalad
-ln -s %{_bindir}/catalogd %{libdir}/sbin-debug/catalogd
-ln -s %{_bindir}/statestored %{libdir}/sbin-debug/statestored
+rm -f %{impala_libdir}/sbin-debug/impalad
+rm -f %{impala_libdir}/sbin-debug/catalogd
+rm -f %{impala_libdir}/sbin-debug/statestored
+rm -f %{_bindir}/impalad
+rm -f %{_bindir}/catalogd
+rm -f %{_bindir}/statestored
+rm -f %{confdir}/impala/conf
+rm -f %{confdir}/default/impala
+rm -f %{confdir}/security/limits.d/impala.conf
+rm -f %{vardir}/lib/impala
+rm -f %{vardir}/run/impala
+rm -f %{vardir}/log/impala
+rm -f %{libdir}
+rm -f %{shell_libdir}
 
-%postun -p /sbin/ldconfig
-rm -f %{libdir}/lib/libhadoop.so.1.0.0
-rm -f %{libdir}/lib/libhdfs.so.0.0.0
+ln -s /opt/hadoop-%{hadoop_ver}/lib/native/libhadoop.so.1.0.0  %{impala_libdir}/lib/libhadoop.so.1.0.0
+ln -s /opt/hadoop-%{hadoop_ver}/lib/native/libhdfs.so.0.0.0  %{impala_libdir}/lib/libhdfs.so.0.0.0
+ln -s /opt/%{service_name}-%{major_ver} /opt/impala
+ln -s %{_bindir}/impalad-%{major_ver} %{impala_libdir}/sbin-debug/impalad
+ln -s %{_bindir}/catalogd-%{major_ver} %{impala_libdir}/sbin-debug/catalogd
+ln -s %{_bindir}/statestored-%{major_ver} %{impala_libdir}/sbin-debug/statestored
+ln -s %{_bindir}/impalad-%{major_ver} %{_bindir}/impalad
+ln -s %{_bindir}/catalogd-%{major_ver} %{_bindir}/catalogd
+ln -s %{_bindir}/statestored-%{major_ver} %{_bindir}/statestored
+
+ln -s %{confdir}/impala/conf.dist/%{major_ver} %{confdir}/impala/conf
+ln -s %{confdir}/default/impala-%{major_ver} %{confdir}/default/impala
+ln -s %{confdir}/security/limits.d/impala.conf-%{major_ver} %{confdir}/security/limits.d/impala.conf
+ln -s %{vardir}/lib/impala-%{major_ver} %{vardir}/lib/impala
+ln -s %{vardir}/run/impala-%{major_ver} %{vardir}/run/impala
+ln -s %{vardir}/log/impala-%{major_ver} %{vardir}/log/impala
+
+ln -s %{impala_shell_libdir}/ %{shell_libdir}/
+ln -s %{impala_libdir}/ %{libdir}/
+exit 0
+
+%postun
+/sbin/ldconfig || exit 1
+rm -f %{impala_libdir}/lib/libhadoop.so.1.0.0
+rm -f %{impala_libdir}/lib/libhdfs.so.0.0.0
 rm -f /opt/impala
-rm -f %{libdir}/sbin-debug/impalad
-rm -f %{libdir}/sbin-debug/catalogd
-rm -f %{libdir}/sbin-debug/statestored
+rm -f %{impala_libdir}/sbin-debug/impalad
+rm -f %{impala_libdir}/sbin-debug/catalogd
+rm -f %{impala_libdir}/sbin-debug/statestored
+exit 0
 
 %changelog
 * Mon Jun 2 2014 Andrew Lee 20140602
