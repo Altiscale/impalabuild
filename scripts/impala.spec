@@ -195,11 +195,11 @@ install -p -m 755 %{_builddir}/%{service_name}/be/build/release/catalog/catalogd
 install -p -m 755 %{_builddir}/%{service_name}/be/build/release/statestore/statestored %{buildroot}%{_bindir}/statestored-%{major_ver}
 
 # Install impala-shell binaries and libs
-install -p -m 755 %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.0-INTERNAL/impala-shell %{buildroot}%{_bindir}/impala-shell-%{major_ver}
-cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.0-INTERNAL/ext-py/* %{buildroot}%{impala_shell_libdir}/ext-py/
-cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.0-INTERNAL/gen-py/* %{buildroot}%{impala_shell_libdir}/gen-py/
-cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.0-INTERNAL/lib/* %{buildroot}%{impala_shell_libdir}/lib/
-install -p -m 755  %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.0-INTERNAL/impala_shell.py %{buildroot}%{impala_shell_libdir}/
+install -p -m 755 %{_builddir}/%{service_name}/shell/build/impala-shell-1.4.0-cdh4-INTERNAL/impala-shell %{buildroot}%{_bindir}/impala-shell-%{major_ver}
+cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-1.4.0-cdh4-INTERNAL/ext-py/* %{buildroot}%{impala_shell_libdir}/ext-py/
+cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-1.4.0-cdh4-INTERNAL/gen-py/* %{buildroot}%{impala_shell_libdir}/gen-py/
+cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-1.4.0-cdh4-INTERNAL/lib/* %{buildroot}%{impala_shell_libdir}/lib/
+install -p -m 755  %{_builddir}/%{service_name}/shell/build/impala-shell-1.4.0-cdh4-INTERNAL/impala_shell.py %{buildroot}%{impala_shell_libdir}/
 
 install -p -m 755 %{_builddir}/%{service_name}/llvm-ir/test-loop.ir %{buildroot}%{impala_libdir}/llvm-ir/test-loop.ir
 install -p -m 755 %{_builddir}/%{service_name}/llvm-ir/impala-no-sse.ll %{buildroot}%{impala_libdir}/llvm-ir/impala-no-sse.ll
