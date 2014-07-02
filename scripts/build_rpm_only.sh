@@ -69,7 +69,7 @@ fi
   git checkout $BRANCH_NAME
   git fetch --all
   git pull
-  git_hash=$(git log $BRANCH_NAME -n 1 --pretty=format:%H)
+  git_hash=$(git rev-parse HEAD)
 popd
 
 # Generate cloudera properties file
