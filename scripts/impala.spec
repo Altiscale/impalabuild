@@ -177,7 +177,7 @@ install -dm 755 %{buildroot}%{_bindir}
 install -dm 755 %{buildroot}%{impala_libdir}
 install -dm 755 %{buildroot}%{impala_shell_libdir}/{ext-py,gen-py,lib}
 install -dm 755 %{buildroot}%{vardir}
-install -dm 755 %{buildroot}%{impala_libdir}/{sbin-debug,llvm-ir,lib,www}
+install -dm 755 %{buildroot}%{impala_libdir}/{cloudera,sbin-debug,llvm-ir,lib,www}
 install -dm 755 %{buildroot}%{vardir}/{log,run,lib}
 install -dm 755 %{buildroot}%{vardir}/log/impala-%{major_ver}
 install -dm 755 %{buildroot}%{vardir}/run/impala-%{major_ver}
@@ -187,6 +187,8 @@ install -dm 755 %{buildroot}%{confdir}/default/
 install -dm 755 %{buildroot}%{confdir}/security/limits.d/
 install -dm 755 %{buildroot}%{confdir}/init.d/
 install -dm 755 %{buildroot}%{_libexecdir}/
+
+install -p -m 755 %{_builddir}/%{service_name}/cdh_version.properties %{buildroot}%{impala_libdir}/cloudera/cdh_version.properties
 
 install -p -m 755 %{_builddir}/%{service_name}/be/build/release/service/impalad %{buildroot}%{_bindir}/impalad-%{major_ver}
 install -p -m 755 %{_builddir}/%{service_name}/be/build/release/catalog/catalogd %{buildroot}%{_bindir}/catalogd-%{major_ver}
@@ -259,6 +261,7 @@ rm -rf %{buildroot}%{_defaultdocdir}
 %{install_impala_dest}/bin
 %{install_impala_dest}%{confdir}
 %{_bindir}/*
+%{impala_libdir}/cloudera/
 %{impala_libdir}/llvm-ir/
 %{impala_libdir}/lib/
 %{impala_libdir}/www/
