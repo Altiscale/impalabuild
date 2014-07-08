@@ -213,7 +213,6 @@ install -p -m 755 %{_builddir}/%{service_name}/llvm-ir/impala-sse.ll %{buildroot
 
 install -p -m 755 %{_builddir}/%{service_name}/be/build/release/service/libfesupport.so %{buildroot}%{impala_libdir}/sbin-debug/
 install -p -m 755 %{_builddir}/%{service_name}/be/build/release/util/libloggingsupport.so %{buildroot}%{impala_libdir}/sbin-debug/
-install -p -m 755 %{_builddir}/%{service_name}/be/build/release/service/session-expiry-test %{buildroot}%{impala_libdir}/sbin-debug/
 
 # Copy bootstrap doc
 cp -rp %{_builddir}/%{service_name}/www/* %{buildroot}%{impala_libdir}/www/
