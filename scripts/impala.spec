@@ -199,7 +199,7 @@ install -p -m 755 %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.1-cd
 cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.1-cdh5/ext-py/* %{buildroot}%{impala_shell_libdir}/ext-py/
 cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.1-cdh5/gen-py/* %{buildroot}%{impala_shell_libdir}/gen-py/
 cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.1-cdh5/lib/* %{buildroot}%{impala_shell_libdir}/lib/
-install -p -m 755  %{_builddir}/%{service_name}/shell/build/impala-shell-impala-shell-1.3.1-cdh5/impala_shell.py %{buildroot}%{impala_shell_libdir}/
+install -p -m 755  %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.1-cdh5/impala_shell.py %{buildroot}%{impala_shell_libdir}/
 
 install -p -m 755 %{_builddir}/%{service_name}/llvm-ir/test-loop.ir %{buildroot}%{impala_libdir}/llvm-ir/test-loop.ir
 install -p -m 755 %{_builddir}/%{service_name}/llvm-ir/impala-no-sse.ll %{buildroot}%{impala_libdir}/llvm-ir/impala-no-sse.ll
