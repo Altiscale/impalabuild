@@ -10,13 +10,14 @@ if [ "x${ANT_HOME}" = "x" ] ; then
   export ANT_HOME=/opt/apache-ant
 fi
 if [ "x${MAVEN_HOME}" = "x" ] ; then
-  export MAVEN_HOME=/opt/apache-maven
+  export MAVEN_HOME=/usr/share/java/apache-maven
 fi
-if [ "x${M2_HOME}" = "x" ] ; then
-  export M2_HOME=/opt/apache-maven
-fi
+
+# Reset to empty value to fix Maven 3 problem
+export M2_HOME=
+
 if [ "x${M2}" = "x" ] ; then
-  export M2=${M2_HOME}/bin
+  export M2=/usr/bin
 fi
 if [ "x${MAVEN_OPTS}" = "x" ] ; then
   export MAVEN_OPTS="-Xmx2048m -XX:MaxPermSize=1024m"
@@ -43,7 +44,7 @@ if [ "x${HIVE_CONF_DIR}" = "x" ] ; then
   export HIVE_CONF_DIR=/etc/hive-${HIVE_VERSION}
 fi
 
-export PATH=$PATH:$M2_HOME/bin:$SCALA_HOME/bin:$ANT_HOME/bin:$JAVA_HOME/bin
+export PATH=$PATH:$M2:$SCALA_HOME/bin:$ANT_HOME/bin:$JAVA_HOME/bin
 
 # Define defau;t spark uid:gid and build version
 # WARNING: the IMPALA_VERSION branch name does not align with the Git branch name branch-0.8 / trunk
