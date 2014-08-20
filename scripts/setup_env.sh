@@ -26,7 +26,7 @@ if [ "x${SCALA_HOME}" = "x" ] ; then
   export SCALA_HOME=/opt/scala
 fi
 if [ "x${HADOOP_VERSION}" = "x" ] ; then
-  export HADOOP_VERSION=2.2.0
+  export HADOOP_VERSION=2.4.1
 fi
 if [ "x${HIVE_VERSION}" = "x" ] ; then
   export HIVE_VERSION=0.12.0
@@ -62,13 +62,13 @@ if [ "x${IMPALA_VERSION}" = "x" ] ; then
 fi
 
 if [ "x${ALTISCALE_RELEASE}" = "x" ] ; then
-  export ALTISCALE_RELEASE=2.0.0
+  export ALTISCALE_RELEASE=3.0.0
 else
   export ALTISCALE_RELEASE
 fi
 
 if [ "x${BRANCH_NAME}" = "x" ] ; then
-  export BRANCH_NAME=altiscale-branch-1.3.1-cdh4
+  export BRANCH_NAME=altiscale-branch-1.3.1-cdh5
 fi
 
 if [ "x${BUILD_TIMEOUT}" = "x" ] ; then
