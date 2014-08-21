@@ -34,8 +34,8 @@ Requires: python-setuptools >= 0.6.10
 Requires: /sbin/ldconfig
 # For init.d script and chkconfig
 Requires: redhat-lsb >= 4.0
-BuildRequires: vcc-hadoop-%{hadoop_ver} >= 2.2.0
-BuildRequires: vcc-hive-%{hive_ver} >= 0.12.0
+BuildRequires: vcc-hadoop-%{hadoop_ver} >= %{hadoop_ver}
+BuildRequires: vcc-hive-%{hive_ver} >= %{hive_ver}
 BuildRequires: boost = 1.46.1
 BuildRequires: llvm = 3.3
 BuildRequires: cmake >= 2.6.4
