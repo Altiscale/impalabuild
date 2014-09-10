@@ -70,11 +70,14 @@ BuildRequires: git
 Url: http://www.altiscale.com/
 
 %description
-%{pkg_name} is a repackaged impala distro that is compiled against Altiscale Hadoop 2.2.x. 
-This package should work with Altiscale Hadoop. We choose v1.3.1.
+Build from source https://github.com/Altiscale/Impala/tree/altiscale-branch-1.3.1-cdh5 with 
+build script from https://github.com/Altiscale/impalabuild/tree/build_1.3.1-cdh5 
+riginal source form https://github.com/cloudera/impala/tree/cdh5-1.3_5.0.3
+%{pkg_name} is a repackaged impala 1.3.1 cdh5 distro that is compiled against Altiscale Hadoop 2.4.1. 
+This package should (not fully tested) work with Altiscale Hadoop. We choose v1.3.1-cdh5.
 This version works with Hive 0.12 and requires mysql and other component that works with Hive and HCatalog.
-The patch includes both v1.2.2 to v1.2.3 and updating HADOOP_VERSION and HADOOP_CONF_DIR to 
-point to vcc-hadoop files.
+The patch includes both v1.3.1-cdh5 and updating HADOOP_VERSION and HADOOP_CONF_DIR to 
+point to vcc-hadoop-2.4.1 and vcc-hive-0.12.0 files.
 
 %pre
 # Soft creation for impala user if it doesn't exist. This behavior is idempotence to Chef deployment.
