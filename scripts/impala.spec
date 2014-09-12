@@ -70,11 +70,14 @@ BuildRequires: git
 Url: http://www.altiscale.com/
 
 %description
+Build form altiscale branch https://github.com/Altiscale/Impala/tree/altiscale-branch-1.3.1-cdh4 
+with build script https://github.com/Altiscale/impalabuild/tree/build_1.3.1-cdh4.
+Original source code from: https://github.com/cloudera/impala/tree/cdh4-1.4
 %{pkg_name} is a repackaged impala distro that is compiled against Altiscale Hadoop 2.2.x. 
-This package should work with Altiscale Hadoop. We choose v1.3.1.
+This package should work with Altiscale Hadoop. We choose v1.4.
 This version works with Hive 0.12 and requires mysql and other component that works with Hive and HCatalog.
-The patch includes both v1.2.2 to v1.2.3 and updating HADOOP_VERSION and HADOOP_CONF_DIR to 
-point to vcc-hadoop files.
+Code is patched to support Hive 0.12 and updating HADOOP_VERSION and HADOOP_CONF_DIR to 
+point to vcc-hadoop-2.2.0 and vcc-hive-0.12.0 files.
 
 %pre
 # Soft creation for impala user if it doesn't exist. This behavior is idempotence to Chef deployment.
@@ -195,11 +198,11 @@ install -p -m 755 %{_builddir}/%{service_name}/be/build/release/catalog/catalogd
 install -p -m 755 %{_builddir}/%{service_name}/be/build/release/statestore/statestored %{buildroot}%{_bindir}/statestored-%{major_ver}
 
 # Install impala-shell binaries and libs
-install -p -m 755 %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.1-cdh5/impala-shell %{buildroot}%{_bindir}/impala-shell-%{major_ver}
-cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.1-cdh5/ext-py/* %{buildroot}%{impala_shell_libdir}/ext-py/
-cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.1-cdh5/gen-py/* %{buildroot}%{impala_shell_libdir}/gen-py/
-cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.1-cdh5/lib/* %{buildroot}%{impala_shell_libdir}/lib/
-install -p -m 755  %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.1-cdh5/impala_shell.py %{buildroot}%{impala_shell_libdir}/
+install -p -m 755 %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.1-cdh4/impala-shell %{buildroot}%{_bindir}/impala-shell-%{major_ver}
+cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.1-cdh4/ext-py/* %{buildroot}%{impala_shell_libdir}/ext-py/
+cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.1-cdh4/gen-py/* %{buildroot}%{impala_shell_libdir}/gen-py/
+cp -rp %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.1-cdh4/lib/* %{buildroot}%{impala_shell_libdir}/lib/
+install -p -m 755  %{_builddir}/%{service_name}/shell/build/impala-shell-1.3.1-cdh4/impala_shell.py %{buildroot}%{impala_shell_libdir}/
 
 install -p -m 755 %{_builddir}/%{service_name}/llvm-ir/test-loop.ir %{buildroot}%{impala_libdir}/llvm-ir/test-loop.ir
 install -p -m 755 %{_builddir}/%{service_name}/llvm-ir/impala-no-sse.ll %{buildroot}%{impala_libdir}/llvm-ir/impala-no-sse.ll
