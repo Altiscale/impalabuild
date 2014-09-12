@@ -70,8 +70,6 @@ BuildRequires: git
 Url: http://www.altiscale.com/
 
 %description
-Build form altiscale branch https://github.com/Altiscale/Impala/tree/altiscale-branch-1.3.1-cdh4 
-with build script https://github.com/Altiscale/impalabuild/tree/build_1.3.1-cdh4.
 Original source code from: https://github.com/cloudera/impala/tree/cdh4-1.4
 %{pkg_name} is a repackaged impala distro that is compiled against Altiscale Hadoop 2.2.x. 
 This package should work with Altiscale Hadoop. We choose v1.4.
