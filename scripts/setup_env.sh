@@ -58,7 +58,7 @@ if [ "x${IMPALA_UID}" = "x" ] ; then
   export IMPALA_UID=411460044
 fi
 if [ "x${IMPALA_VERSION}" = "x" ] ; then
-  export IMPALA_VERSION=1.3.1
+  export IMPALA_VERSION=1.4
 fi
 
 if [ "x${ALTISCALE_RELEASE}" = "x" ] ; then
