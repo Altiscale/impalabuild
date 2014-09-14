@@ -60,13 +60,14 @@ fi
 if [ "x${IMPALA_UID}" = "x" ] ; then
   export IMPALA_UID=411460044
 fi
+# Cannot use hyphen/minus symbol in IMPALA_VERSION variable, breaks RPM spec syntax
 if [ "x${IMPALA_VERSION}" = "x" ] ; then
   if [ "x${HIVE_VERSION}" = "x0.12.0" ] ; then
-    export IMPALA_VERSION=1.4-cdh5-hive12
+    export IMPALA_VERSION=1.4.cdh5.h12
   elif [ "x${HIVE_VERSION}" = "x0.13.0" ] ; then
-    export IMPALA_VERSION=1.4-cdh5-hive13
+    export IMPALA_VERSION=1.4.cdh5.h13
   elif [ "x${HIVE_VERSION}" = "x0.13.1" ] ; then
-    export IMPALA_VERSION=1.4-cdh5-hive13
+    export IMPALA_VERSION=1.4.cdh5.h13
   else
     echo "error - can't recognize HIVE_VERSION=$HIVE_VERSION"
   fi
