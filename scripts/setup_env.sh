@@ -29,7 +29,7 @@ if [ "x${HADOOP_VERSION}" = "x" ] ; then
   export HADOOP_VERSION=2.4.1
 fi
 if [ "x${HIVE_VERSION}" = "x" ] ; then
-  export HIVE_VERSION=0.12.0
+  export HIVE_VERSION=0.13.1
 fi
 if [ "x${HADOOP_HOME}" = "x" ] ; then
   export HADOOP_HOME=/opt/hadoop-${HADOOP_VERSION}
@@ -58,7 +58,7 @@ if [ "x${IMPALA_UID}" = "x" ] ; then
   export IMPALA_UID=411460044
 fi
 if [ "x${IMPALA_VERSION}" = "x" ] ; then
-  export IMPALA_VERSION=1.3.1
+  export IMPALA_VERSION=1.4
 fi
 
 if [ "x${ALTISCALE_RELEASE}" = "x" ] ; then
@@ -68,7 +68,7 @@ else
 fi
 
 if [ "x${BRANCH_NAME}" = "x" ] ; then
-  export BRANCH_NAME=altiscale-branch-1.3.1-cdh5
+  export BRANCH_NAME=altiscale-branch-1.4-cdh512
 fi
 
 if [ "x${BUILD_TIMEOUT}" = "x" ] ; then
