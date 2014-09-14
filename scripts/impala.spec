@@ -73,11 +73,11 @@ Url: http://www.altiscale.com/
 Build from Altiscale branch https://github.com/Altiscale/Impala/tree/altiscale-branch-1.4-cdh4 with 
 build script https://github.com/Altiscale/impalabuild/tree/build_1.4-cdh4
 Original source code from: https://github.com/cloudera/impala/tree/cdh4-1.4
-%{pkg_name} is a repackaged impala distro that is compiled against Altiscale Hadoop 2.2.x. 
+%{pkg_name} is a repackaged impala distro that is compiled against Altiscale Hadoop 2.4.1. 
 This package should work with Altiscale Hadoop. We choose v1.4.
 This version works with Hive 0.12 and requires mysql and other component that works with Hive and HCatalog.
 Code is patched to support Hive 0.12 and updating HADOOP_VERSION and HADOOP_CONF_DIR to 
-point to vcc-hadoop-2.2.0 and vcc-hive-0.12.0 files.
+point to vcc-hadoop-2.4.1 and vcc-hive-0.12.0 files.
 
 %pre
 # Soft creation for impala user if it doesn't exist. This behavior is idempotence to Chef deployment.

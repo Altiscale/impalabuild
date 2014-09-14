@@ -26,7 +26,7 @@ if [ "x${SCALA_HOME}" = "x" ] ; then
   export SCALA_HOME=/opt/scala
 fi
 if [ "x${HADOOP_VERSION}" = "x" ] ; then
-  export HADOOP_VERSION=2.2.0
+  export HADOOP_VERSION=2.4.1
 fi
 if [ "x${HIVE_VERSION}" = "x" ] ; then
   export HIVE_VERSION=0.12.0
