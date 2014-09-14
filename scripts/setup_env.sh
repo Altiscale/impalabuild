@@ -61,7 +61,15 @@ if [ "x${IMPALA_UID}" = "x" ] ; then
   export IMPALA_UID=411460044
 fi
 if [ "x${IMPALA_VERSION}" = "x" ] ; then
-  export IMPALA_VERSION=1.4
+  if [ "x${HIVE_VERSION}" = "x0.12.0" ] ; then
+    export IMPALA_VERSION=1.4-cdh4-hive12
+  elif [ "x${HIVE_VERSION}" = "x0.13.0" ] ; then
+    export IMPALA_VERSION=1.4-cdh4-hive13
+  elif [ "x${HIVE_VERSION}" = "x0.13.1" ] ; then
+    export IMPALA_VERSION=1.4-cdh4-hive13
+  else
+    echo "error - can't recognize HIVE_VERSION=$HIVE_VERSION"
+  fi
 fi
 
 if [ "x${ALTISCALE_RELEASE}" = "x" ] ; then
