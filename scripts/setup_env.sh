@@ -44,6 +44,9 @@ if [ "x${HIVE_CONF_DIR}" = "x" ] ; then
   export HIVE_CONF_DIR=/etc/hive-${HIVE_VERSION}
 fi
 
+echo "ok - Jenkins env HADOOP_VERSION=$HADOOP_VERSION"
+echo "ok - Jenkins env HIVE_VERSION=$HIVE_VERSION"
+
 export PATH=$PATH:$M2:$SCALA_HOME/bin:$ANT_HOME/bin:$JAVA_HOME/bin
 
 # Define defau;t spark uid:gid and build version
@@ -62,7 +65,7 @@ if [ "x${IMPALA_VERSION}" = "x" ] ; then
 fi
 
 if [ "x${ALTISCALE_RELEASE}" = "x" ] ; then
-  export ALTISCALE_RELEASE=2.0.0
+  export ALTISCALE_RELEASE=3.0.0
 else
   export ALTISCALE_RELEASE
 fi
