@@ -28,8 +28,8 @@ fi
 if [ "x${ALTISCALE_HADOOP_VERSION}" = "x" ] ; then
   export ALTISCALE_HADOOP_VERSION=2.4.1
 fi
-if [ "x${HIVE_VERSION}" = "x" ] ; then
-  export HIVE_VERSION=0.12.0
+if [ "x${ALTISCALE_HIVE_VERSION}" = "x" ] ; then
+  export ALTISCALE_HIVE_VERSION=0.12.0
 fi
 if [ "x${HADOOP_HOME}" = "x" ] ; then
   export HADOOP_HOME=/opt/hadoop-${ALTISCALE_HADOOP_VERSION}
@@ -38,14 +38,14 @@ if [ "x${HADOOP_CONF_DIR}" = "x" ] ; then
   export HADOOP_CONF_DIR=/etc/hadoop-${ALTISCALE_HADOOP_VERSION}
 fi
 if [ "x${HIVE_HOME}" = "x" ] ; then
-  export HIVE_HOME=/opt/hive-${HIVE_VERSION}
+  export HIVE_HOME=/opt/hive-${ALTISCALE_HIVE_VERSION}
 fi
 if [ "x${HIVE_CONF_DIR}" = "x" ] ; then
-  export HIVE_CONF_DIR=/etc/hive-${HIVE_VERSION}
+  export HIVE_CONF_DIR=/etc/hive-${ALTISCALE_HIVE_VERSION}
 fi
 
 echo "ok Jenkins env ALTISCALE_HADOOP_VERSION=$ALTISCALE_HADOOP_VERSION"
-echo "ok Jenkins env HIVE_VERSION=$HIVE_VERSION"
+echo "ok Jenkins env ALTISCALE_HIVE_VERSION=$ALTISCALE_HIVE_VERSION"
 
 export PATH=$PATH:$M2:$SCALA_HOME/bin:$ANT_HOME/bin:$JAVA_HOME/bin
 
@@ -62,14 +62,14 @@ if [ "x${IMPALA_UID}" = "x" ] ; then
 fi
 # Cannot use hyphen/minus symbol in IMPALA_VERSION variable, breaks RPM spec syntax
 if [ "x${IMPALA_VERSION}" = "x" ] ; then
-  if [ "x${HIVE_VERSION}" = "x0.12.0" ] ; then
+  if [ "x${ALTISCALE_HIVE_VERSION}" = "x0.12.0" ] ; then
     export IMPALA_VERSION=1.4.cdh5.h12
-  elif [ "x${HIVE_VERSION}" = "x0.13.0" ] ; then
+  elif [ "x${ALTISCALE_HIVE_VERSION}" = "x0.13.0" ] ; then
     export IMPALA_VERSION=1.4.cdh5.h13
-  elif [ "x${HIVE_VERSION}" = "x0.13.1" ] ; then
+  elif [ "x${ALTISCALE_HIVE_VERSION}" = "x0.13.1" ] ; then
     export IMPALA_VERSION=1.4.cdh5.h13
   else
-    echo "error - can't recognize HIVE_VERSION=$HIVE_VERSION"
+    echo "error - can't recognize ALTISCALE_HIVE_VERSION=$ALTISCALE_HIVE_VERSION"
   fi
 fi
 
