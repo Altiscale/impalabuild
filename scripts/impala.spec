@@ -70,9 +70,9 @@ BuildRequires: git
 Url: http://www.altiscale.com/
 
 %description
-Build from Altiscale branch https://github.com/Altiscale/Impala/tree/altiscale-branch-1.4-cdh512 with 
-build script https://github.com/Altiscale/impalabuild/tree/build_1.4-cdh512
-Original source code from: https://github.com/cloudera/impala/tree/cdh5-1.4_5.1.2
+Build from Altiscale branch https://github.com/Altiscale/Impala/tree/altiscale-branch-1.4-cdh510 with 
+build script https://github.com/Altiscale/impalabuild/tree/build_1.4-cdh510
+Original source code from: https://github.com/cloudera/impala/tree/cdh5-1.4_5.1.0
 %{pkg_name} is a repackaged impala distro that is compiled against Altiscale Hadoop 2.4.1. 
 This package should work with Altiscale Hadoop. We choose v1.4.
 This version works with Hive 0.12 and requires mysql and other component that works with Hive and HCatalog.

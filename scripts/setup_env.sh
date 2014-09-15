@@ -29,7 +29,7 @@ if [ "x${ALTISCALE_HADOOP_VERSION}" = "x" ] ; then
   export ALTISCALE_HADOOP_VERSION=2.4.1
 fi
 if [ "x${HIVE_VERSION}" = "x" ] ; then
-  export HIVE_VERSION=0.13.1
+  export HIVE_VERSION=0.12.0
 fi
 if [ "x${HADOOP_HOME}" = "x" ] ; then
   export HADOOP_HOME=/opt/hadoop-${ALTISCALE_HADOOP_VERSION}
@@ -80,7 +80,7 @@ else
 fi
 
 if [ "x${BRANCH_NAME}" = "x" ] ; then
-  export BRANCH_NAME=altiscale-branch-1.4-cdh512
+  export BRANCH_NAME=altiscale-branch-1.4-cdh510
 fi
 
 if [ "x${BUILD_TIMEOUT}" = "x" ] ; then
