@@ -29,7 +29,7 @@ if [ "x${ALTISCALE_HADOOP_VERSION}" = "x" ] ; then
   export ALTISCALE_HADOOP_VERSION=2.4.1
 fi
 if [ "x${ALTISCALE_HIVE_VERSION}" = "x" ] ; then
-  export ALTISCALE_HIVE_VERSION=0.13.1
+  export ALTISCALE_HIVE_VERSION=0.12.0
 fi
 if [ "x${HADOOP_HOME}" = "x" ] ; then
   export HADOOP_HOME=/opt/hadoop-${ALTISCALE_HADOOP_VERSION}

@@ -75,9 +75,8 @@ build script https://github.com/Altiscale/impalabuild/tree/build_1.4-cdh510
 Original source code from: https://github.com/cloudera/impala/tree/cdh5-1.4_5.1.0
 %{pkg_name} is a repackaged impala distro that is compiled against Altiscale Hadoop 2.4.1. 
 This package should work with Altiscale Hadoop. We choose v1.4.
-This version works with Hive 0.12 and requires mysql and other component that works with Hive and HCatalog.
-Code is patched to support Hive 0.13.1 (experimental) and updating HADOOP_VERSION and HADOOP_CONF_DIR to 
-point to vcc-hadoop-2.4.1 and vcc-hive-0.13.1 files.
+This version ONLY works with Cloudera's Hive 0.12.0-cdh5.1.0 and requires mysql and other component that works with Hive and HCatalog.
+Code is patched to updated HADOOP_VERSION and HADOOP_CONF_DIR to point to vcc-hadoop-2.4.1.
 
 %pre
 # Soft creation for impala user if it doesn't exist. This behavior is idempotence to Chef deployment.
@@ -116,7 +115,9 @@ pushd `pwd`
 cd %{_builddir}/%{service_name}/
 export IMPALA_HOME=`pwd`
 export HADOOP_VERSION=%{hadoop_ver}
+export ALTISCALE_HADOOP_VERSION=%{hadoop_ver}
 export HIVE_VERSION=%{hive_ver}
+export ALTISCALE_HIVE_VERSION=%{hive_ver}
 . bin/impala-config.sh
 source bin/impala-config.sh
 env | grep "IMPALA.*VERSION"
