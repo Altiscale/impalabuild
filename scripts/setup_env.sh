@@ -25,17 +25,17 @@ fi
 if [ "x${SCALA_HOME}" = "x" ] ; then
   export SCALA_HOME=/opt/scala
 fi
-if [ "x${HADOOP_VERSION}" = "x" ] ; then
-  export HADOOP_VERSION=2.4.1
+if [ "x${ALTISCALE_HADOOP_VERSION}" = "x" ] ; then
+  export ALTISCALE_HADOOP_VERSION=2.4.1
 fi
 if [ "x${HIVE_VERSION}" = "x" ] ; then
   export HIVE_VERSION=0.12.0
 fi
 if [ "x${HADOOP_HOME}" = "x" ] ; then
-  export HADOOP_HOME=/opt/hadoop-${HADOOP_VERSION}
+  export HADOOP_HOME=/opt/hadoop-${ALTISCALE_HADOOP_VERSION}
 fi
 if [ "x${HADOOP_CONF_DIR}" = "x" ] ; then
-  export HADOOP_CONF_DIR=/etc/hadoop-${HADOOP_VERSION}
+  export HADOOP_CONF_DIR=/etc/hadoop-${ALTISCALE_HADOOP_VERSION}
 fi
 if [ "x${HIVE_HOME}" = "x" ] ; then
   export HIVE_HOME=/opt/hive-${HIVE_VERSION}
@@ -44,7 +44,7 @@ if [ "x${HIVE_CONF_DIR}" = "x" ] ; then
   export HIVE_CONF_DIR=/etc/hive-${HIVE_VERSION}
 fi
 
-echo "ok - Jenkins env HADOOP_VERSION=$HADOOP_VERSION"
+echo "ok - Jenkins env ALTISCALE_HADOOP_VERSION=$ALTISCALE_HADOOP_VERSION"
 echo "ok - Jenkins env HIVE_VERSION=$HIVE_VERSION"
 
 export PATH=$PATH:$M2:$SCALA_HOME/bin:$ANT_HOME/bin:$JAVA_HOME/bin
