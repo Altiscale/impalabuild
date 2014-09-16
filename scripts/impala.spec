@@ -116,6 +116,7 @@ pushd `pwd`
 cd %{_builddir}/%{service_name}/
 export IMPALA_HOME=`pwd`
 export HADOOP_VERSION=%{hadoop_ver}
+export ALTISCALE_HADOOP_VERSION=%{hadoop_ver}
 export HIVE_VERSION=%{hive_ver}
 . bin/impala-config.sh
 source bin/impala-config.sh
