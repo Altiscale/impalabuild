@@ -116,6 +116,7 @@ sed -i "s/IMPALA_USER/$IMPALA_USER/g" "$WORKSPACE/rpmbuild/SPECS/impala.spec"
 sed -i "s/IMPALA_GID/$IMPALA_GID/g" "$WORKSPACE/rpmbuild/SPECS/impala.spec"
 sed -i "s/IMPALA_UID/$IMPALA_UID/g" "$WORKSPACE/rpmbuild/SPECS/impala.spec"
 sed -i "s/BUILD_TIME/$BUILD_TIME/g" "$WORKSPACE/rpmbuild/SPECS/impala.spec"
+sed -i "s/GITHASH_REPLACE/$GIT_HASH/g" "$WORKSPACE/rpmbuild/SPECS/impala.spec"
 
 rpmbuild -vvv -ba --define "_topdir $WORKSPACE/rpmbuild" --buildroot $WORKSPACE/rpmbuild/BUILDROOT/ $WORKSPACE/rpmbuild/SPECS/impala.spec
 if [ $? -ne "0" ] ; then

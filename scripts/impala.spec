@@ -1,6 +1,7 @@
 %define major_ver           IMPALA_VERSION
 %define hadoop_ver          HADOOP_VERSION_REPLACE
 %define hive_ver            HIVE_VERSION_REPLACE
+%define git_hash            GITHASH_REPLACE
 %define service_name        alti-impala
 %define company_prefix      altiscale
 %define pkg_name            %{service_name}-%{major_ver}
@@ -118,6 +119,8 @@ export HADOOP_VERSION=%{hadoop_ver}
 export ALTISCALE_HADOOP_VERSION=%{hadoop_ver}
 export HIVE_VERSION=%{hive_ver}
 export ALTISCALE_HIVE_VERSION=%{hive_ver}
+export IMPALA_VERSION=%{major_ver}
+export GIT_HASH=%{git_hash}
 . bin/impala-config.sh
 source bin/impala-config.sh
 env | grep "IMPALA.*VERSION"

@@ -125,6 +125,7 @@ sed -i "s/IMPALA_VERSION/$IMPALA_VERSION/g" "$WORKSPACE/rpmbuild/SPECS/impala.sp
 sed -i "s/HADOOP_VERSION_REPLACE/$ALTISCALE_HADOOP_VERSION/g" "$WORKSPACE/rpmbuild/SPECS/impala.spec"
 sed -i "s/HIVE_VERSION_REPLACE/$ALTISCALE_HIVE_VERSION/g" "$WORKSPACE/rpmbuild/SPECS/impala.spec"
 sed -i "s/BUILD_TIME/$BUILD_TIME/g" "$WORKSPACE/rpmbuild/SPECS/impala.spec"
+sed -i "s/GITHASH_REPLACE/$GIT_HASH/g" "$WORKSPACE/rpmbuild/SPECS/impala.spec"
 
 rpmbuild -vvv -bs $WORKSPACE/rpmbuild/SPECS/impala.spec \
               --define "_topdir $WORKSPACE/rpmbuild" \
