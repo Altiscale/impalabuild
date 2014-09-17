@@ -1,4 +1,4 @@
-%define major_ver           IMPALA_VERSION
+%define major_ver           IMPALA_VERSION_REPLACE
 %define hadoop_ver          HADOOP_VERSION_REPLACE
 %define hive_ver            HIVE_VERSION_REPLACE
 %define git_hash            GITHASH_REPLACE

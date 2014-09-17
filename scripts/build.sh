@@ -121,7 +121,7 @@ fi
 # Explicitly define IMPALA_HOME here for build purpose
 export IMPALA_HOME=$WORKSPACE/rpmbuild/BUILD/alti-impala
 echo "ok - applying version number $IMPALA_VERSION and release number $BUILD_TIME, the pattern delimiter is / here"
-sed -i "s/IMPALA_VERSION/$IMPALA_VERSION/g" "$WORKSPACE/rpmbuild/SPECS/impala.spec"
+sed -i "s/IMPALA_VERSION_REPLACE/$IMPALA_VERSION/g" "$WORKSPACE/rpmbuild/SPECS/impala.spec"
 sed -i "s/HADOOP_VERSION_REPLACE/$ALTISCALE_HADOOP_VERSION/g" "$WORKSPACE/rpmbuild/SPECS/impala.spec"
 sed -i "s/HIVE_VERSION_REPLACE/$ALTISCALE_HIVE_VERSION/g" "$WORKSPACE/rpmbuild/SPECS/impala.spec"
 sed -i "s/BUILD_TIME/$BUILD_TIME/g" "$WORKSPACE/rpmbuild/SPECS/impala.spec"
