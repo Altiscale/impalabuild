@@ -26,7 +26,7 @@ License: Copyright (C) 2014 Altiscale. All rights reserved.
 Source: %{_sourcedir}/%{service_name}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{major_ver}-%{release}-root-%{service_name}
 # Requires: vcc-hadoop-%{hadoop_ver}
-Requires: vcc-hive-%{hive_ver}
+# Requires: vcc-hive-%{hive_ver}
 Requires: jdk >= 1.7
 Requires: boost = 1.46.1
 Requires: cyrus-sasl-devel >= 2.1.23
