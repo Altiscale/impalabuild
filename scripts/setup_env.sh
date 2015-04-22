@@ -80,7 +80,7 @@ else
 fi
 
 if [ "x${BRANCH_NAME}" = "x" ] ; then
-  export BRANCH_NAME=altiscale-branch-1.4-cdh510
+  export BRANCH_NAME=altiscale-branch-1.4-cdh513
 fi
 
 if [ "x${BUILD_TIMEOUT}" = "x" ] ; then

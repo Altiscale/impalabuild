@@ -27,7 +27,7 @@ Source: %{_sourcedir}/%{service_name}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{major_ver}-%{release}-root-%{service_name}
 # Requires: vcc-hadoop-%{hadoop_ver}
 # Requires: vcc-hive-%{hive_ver}
-Requires: jdk >= 1.7
+# Requires: jdk >= 1.7
 Requires: boost = 1.46.1
 Requires: cyrus-sasl-devel >= 2.1.23
 Requires: cyrus-sasl-gssapi >= 2.1.23
@@ -71,12 +71,12 @@ BuildRequires: git
 Url: http://www.altiscale.com/
 
 %description
-Build from Altiscale branch https://github.com/Altiscale/Impala/tree/altiscale-branch-1.4-cdh510 with 
-build script https://github.com/Altiscale/impalabuild/tree/build_1.4-cdh510
-Original source code from: https://github.com/cloudera/impala/tree/cdh5-1.4_5.1.0
+Build from Altiscale branch https://github.com/Altiscale/Impala/tree/altiscale-branch-1.4-cdh513 with 
+build script https://github.com/Altiscale/impalabuild/tree/altiscale-branch-1.4-cdh513
+Original source code from: https://github.com/cloudera/impala/tree/cdh5-1.4_5.1.3
 %{pkg_name} is a repackaged impala distro that is compiled against Altiscale Hadoop 2.4.1. 
 This package should work with Altiscale Hadoop. We choose v1.4.
-This version ONLY works with Cloudera's Hive 0.12.0-cdh5.1.0 and requires mysql and other component that works with Hive and HCatalog.
+This version ONLY works with Cloudera's Hive 0.12.0-cdh5.1.3 and requires mysql and other component that works with Hive and HCatalog.
 Code is patched to updated HADOOP_VERSION and HADOOP_CONF_DIR to point to vcc-hadoop-2.4.1.
 
 %pre
@@ -339,6 +339,8 @@ rm -f %{impala_libdir}/sbin-debug/statestored
 exit 0
 
 %changelog
+* Wed Apr 22 2015 Andrew Lee 20150422
+- Update Impala 1.4 to 1.4.2 for CDH5.1.3
 * Mon Jun 2 2014 Andrew Lee 20140602
 - update install and post macros to include more files and create links
 * Fri May 30 2014 Andrew Lee 20140530
