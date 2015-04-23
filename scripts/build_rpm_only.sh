@@ -100,6 +100,7 @@ fi
 mv impala alti-impala
 rm -f alti-impala/$(basename $cdh_property_file)
 cp "$cdh_property_file" alti-impala/
+cp "$impala_version_file" alti-impala/bin/
 tar --exclude .git --exclude .gitignore -cpzf alti-impala.tar.gz alti-impala
 stat alti-impala.tar.gz
 
