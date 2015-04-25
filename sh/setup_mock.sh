@@ -14,6 +14,8 @@ setup_mock()
 {
     if (($HELP)) ; then setup_mock_help ; return ; fi
 
+    if [ -z "$BUILD_DIR" ] ; then echo "setup_mock requires BUILD_DIR" ; exit 1 ; fi
+
     : ${MOCK_CFG_SRCDIR:=${APPDIR}/mock}
     : ${MOCK_CFG_SRC:=${MOCK_CFG_SRCDIR}/altiscale-impala-centos-6-x86_64.cfg}
     : ${MOCK_DIR:=${BUILD_DIR}/mock}
@@ -32,7 +34,7 @@ setup_mock()
 
     # create the mock configuration
     cat >$MOCK_CFG_PATH <<EOF
-# variables created by build #{BUILDNUM}
+# variables created by build #{BUILD_NUMBER}
 
 config_opts['basedir'] = '${MOCK_DIR}/base'
 config_opts['cache_topdir'] = '${MOCK_DIR}/cache'

@@ -1,14 +1,14 @@
 # This file is a submodule of ../build.sh.
 
-command_help()
+COMMAND_help()
 {
     echo
-    echo command
+    echo COMMAND
     echo -------
-    echo "Documentation about this command."
+    echo "Documentation about this COMMAND."
 }
 
-command()
+COMMAND()
 {
-    if (($HELP)) ; then command_help ; return ; fi
+    if (($HELP)) ; then COMMAND_help ; return ; fi
 }

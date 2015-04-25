@@ -29,12 +29,9 @@ version()
 }
 
 # include submodules
-. $APPDIR/sh/install_build_framework.sh
-. $APPDIR/sh/emulate_jenkins.sh
-. $APPDIR/sh/setup_environment.sh
-. $APPDIR/sh/print_environment.sh
-. $APPDIR/sh/setup_mock.sh
-. $APPDIR/sh/clean.sh
+for submodule in $APPDIR/sh/*.sh ; do
+. $submodule
+done
 
 # emit usage if there are no arguments or just a request for help
 case $# in
@@ -63,6 +60,7 @@ for arg in $* ; do
 	( "print_environment" )       print_environment         ;;
 	( "setup_mock" )              setup_mock                ;;
 	( "clean" )                   clean                     ;;
+	( "dev_build" )               dev_build                 ;;
         ( * ) echo "unexpected argument: $arg" ; usage ; exit 1 ;;
     esac
 done
