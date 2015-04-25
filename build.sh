@@ -16,6 +16,7 @@ usage()
     echo "  setup_environment - set up the shell environment"
     echo "  print_environment - print the shell environment"
     echo "  setup_mock - set up the mock environment"
+    echo "  setup_rpmbuild - set up the rpmbuild tree"
     echo "  clean - remove artifacts from previous builds"
     echo
     echo " hybrid commands:"
@@ -58,6 +59,7 @@ for arg in $* ; do
 	( "emulate_jenkins" )         emulate_jenkins           ;;
 	( "setup_environment" )       setup_environment         ;;
 	( "print_environment" )       print_environment         ;;
+	( "setup_rpmbuild" )          setup_rpmbuild            ;;
 	( "setup_mock" )              setup_mock                ;;
 	( "clean" )                   clean                     ;;
 	( "dev_build" )               dev_build                 ;;

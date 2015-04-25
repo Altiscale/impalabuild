@@ -16,5 +16,6 @@ dev_build()
     emulate_jenkins
     clean
     setup_environment
+    setup_rpmbuild
     setup_mock
 }

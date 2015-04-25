@@ -46,7 +46,6 @@ emulate_jenkins()
     : ${GIT_USER:=git@github.com}
     : ${GIT_ORG:=Altiscale}
     : ${IMPALA_REPO:=Impala}
-    IMPALA_GIT=${WORKSPACE}/${IMPALA_REPO}
     GIT_URL=${GIT_USER}:${GIT_ORG}/${IMPALA_REPO}.git
     emulate_jenkins_git
 }

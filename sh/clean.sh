@@ -14,9 +14,11 @@ clean()
 
     if [ -z "$WORKSPACE" ] ; then echo "clean requires WORKSPACE" ; exit 1 ; fi
 
-    for mockdir in ${WORKSPACE}/build-*/mock ; do
-	mock --configdir=$mockdir -r mock --clean
-    done
+    if ( ls ${WORKSPACE}/build-*/mock >& /dev/null ) ; then
+	for mockdir in ${WORKSPACE}/build-*/mock ; do
+	    mock --configdir=$mockdir -r mock --clean
+	done
+    fi
 
     rm -rf ${WORKSPACE}/build-*
 }

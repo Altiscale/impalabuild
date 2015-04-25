@@ -16,6 +16,7 @@ setup_environment()
     if (($HELP)) ; then setup_environment_help ; return ; fi
 
     BUILD_DIR=${WORKSPACE}/build-${BUILD_NUMBER}
+    IMPALA_GIT=${WORKSPACE}/${IMPALA_REPO}
 
     # default if not already in build environment
     export JAVA_HOME=${JAVA_HOME:=/usr/java/default}
