@@ -93,6 +93,7 @@ Requires: libopenssl0_9_8
 # BEGIN added by Altiscale (TODO: check that all are necessary + versions)
 Requires: jdk >= 1.7
 Requires: boost = 1.46.1
+Requires: boost-date-time = 1.41.0
 Requires: cyrus-sasl-devel >= 2.1.23
 Requires: cyrus-sasl-gssapi >= 2.1.23
 Requires: python-setuptools >= 0.6.10
@@ -106,6 +107,7 @@ Requires: redhat-lsb >= 4.0
 BuildRequires: vcc-hadoop-2.4.1
 BuildRequires: vcc-hive-0.13.1
 BuildRequires: boost = 1.46.1
+BuildRequires: boost-date-time = 1.41.0
 BuildRequires: llvm = 3.3
 BuildRequires: cmake >= 2.6.4
 BuildRequires: cyrus-sasl-devel >= 2.1.23

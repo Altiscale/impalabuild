@@ -24,8 +24,8 @@ build_srpm()
     cp ${APPDIR}/src/* ${RPMBUILD}/SOURCES/
 
     # copy the source into place
-    pushd ${IMPALA_GIT}
-    tar --exclude .git --exclude .gitignore --transform "s,^.,${IMPALA_RELEASE}," -czf ${RPMBUILD}/SOURCES/${IMPALA_RELEASE}.tar.gz .
+    pushd ${WORKSPACE}
+    tar --exclude .git --exclude .gitignore -czf ${RPMBUILD}/SOURCES/${IMPALA_RELEASE}.tar.gz ${IMPALA_RELEASE}
     popd
 
     # build the source rpm

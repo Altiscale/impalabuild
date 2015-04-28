@@ -71,7 +71,11 @@ init_mock()
     cp $MOCK_CFG_SRCDIR/site-defaults.cfg $MOCK_DIR
     cp /etc/mock/logging.ini $MOCK_DIR
 
-
     # initialize mock
     ${MOCK_CMD} --init
+
+    # Need to run this command in mock/chroot to allow java to work:
+    # ${MOCK_CMD} --chroot mount -t proc none /proc
+    # otherwise, this error happens when running mvn in ext-data-source:
+    #   /usr/java/default/bin/java: error while loading shared libraries: libjli.so: cannot open shared object file: No such file or directory
 }

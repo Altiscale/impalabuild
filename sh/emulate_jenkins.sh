@@ -16,10 +16,10 @@ emulate_jenkins_git()
 {
     pushd $WORKSPACE
 
-    if [ ! -d $IMPALA_REPO ] ; then
-	git clone ${GIT_URL}
+    if [ ! -d "$IMPALA_RELEASE" ] ; then
+	git clone ${GIT_URL} "${IMPALA_RELEASE}"
     fi
-    cd $IMPALA_REPO
+    cd "$IMPALA_RELEASE"
     git fetch
     git checkout $GIT_BRANCH
     git pull
@@ -50,7 +50,9 @@ emulate_jenkins()
     export GIT_BRANCH=${GIT_BRANCH:=altiscale-branch-cdh5-2.1.2_5.3.2}
     export IMPALA_RELEASE=${IMPALA_RELEASE:=impala-2.1.2-cdh5.3.2}
 
-    # emulate the git pull that jenkins will perform
+    # Emulate the git pull that jenkins will perform.
+    # Use the "Local subdirectory for repo" option for the Jenkins git
+    # plugin and specify IMPALA_RELEASE as the subdirectory.
     : ${GIT_USER:=git@github.com}
     : ${GIT_ORG:=Altiscale}
     : ${IMPALA_REPO:=Impala}
