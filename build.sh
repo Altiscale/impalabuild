@@ -11,17 +11,16 @@ usage()
     echo " individual commands:"
     echo "  help [commands] - print this message or information about commands"
     echo "  version - print version information"
-    echo "  install_build_framework - one time set-up (requires sudo)"
+    echo "  clean - remove artifacts from previous builds"
+    echo "  emulate_chef - one time set-up (requires sudo)"
     echo "  emulate_jenkins - set up the environment to emulate a jenkins job"
     echo "  setup_environment - set up the shell environment"
     echo "  print_environment - print the shell environment"
-    echo "  setup_mock - set up the mock environment"
+    echo "  setup_mock - set up the mock environment variables"
+    echo "  init_mock - set up the mock environment"
     echo "  setup_rpmbuild - set up the rpmbuild tree"
-    echo "  clean - remove artifacts from previous builds"
-    echo
-    echo " hybrid commands:"
-    echo "  dev_build - run all of the steps for a development build"
-    echo "  jenkins_build - run all of the steps for a build on jenkins"
+    echo "  build_srpm - create the source RPM from the spec and git repo"
+    echo "  mock_build - use mock to build the RPM"
 }
 
 version()
@@ -55,14 +54,16 @@ for arg in $* ; do
     case $arg in
 	( "help" )                                              ;;
 	( "version" )                 version                   ;;
-	( "install_build_framework" ) install_build_framework   ;;
+	( "emulate_chef" )            emulate_chef              ;;
 	( "emulate_jenkins" )         emulate_jenkins           ;;
 	( "setup_environment" )       setup_environment         ;;
 	( "print_environment" )       print_environment         ;;
-	( "setup_rpmbuild" )          setup_rpmbuild            ;;
 	( "setup_mock" )              setup_mock                ;;
+	( "init_mock" )               init_mock                 ;;
+	( "setup_rpmbuild" )          setup_rpmbuild            ;;
+	( "build_srpm" )              build_srpm                ;;
+	( "mock_build" )              mock_build                ;;
 	( "clean" )                   clean                     ;;
-	( "dev_build" )               dev_build                 ;;
         ( * ) echo "unexpected argument: $arg" ; usage ; exit 1 ;;
     esac
 done

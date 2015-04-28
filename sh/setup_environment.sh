@@ -15,6 +15,11 @@ setup_environment()
 {
     if (($HELP)) ; then setup_environment_help ; return ; fi
 
+    if [ -z "$WORKSPACE" ] ; then
+	echo "setup_environment requires emulate_jenkins"
+	emulate_jenkins
+    fi
+
     BUILD_DIR=${WORKSPACE}/build-${BUILD_NUMBER}
     IMPALA_GIT=${WORKSPACE}/${IMPALA_REPO}
 
@@ -50,5 +55,5 @@ setup_environment()
     export BUILD_TIMEOUT=${BUILD_TIMEOUT:=14400}
 
     # TODO: remove BUILD_TIME
-    export BUILD_TIME="DO NOT USE, REMOVE THIS VARIABLE WHEN VALIDATED"
+    # export BUILD_TIME="DO NOT USE, REMOVE THIS VARIABLE WHEN VALIDATED"
 }

@@ -13,15 +13,23 @@ build_srpm()
 {
     if (($HELP)) ; then build_srpm_help ; return ; fi
 
-    if [ -z "$RPMBUILD" ] ; then echo "build_srpm requires RPMBUILD" ; exit 1 ; fi
+    if [ -z "$RPMBUILD" ] ; then
+	echo "build_srpm requires setup_rpmbuild"
+	setup_rpmbuild
+    fi
 
     # copy the spec file into place
     : ${SPEC_PATH:=${APPDIR}/spec/impala.spec}
     cp ${SPEC_PATH} ${RPMBUILD}/SPECS/
+    cp ${APPDIR}/src/* ${RPMBUILD}/SOURCES/
 
     # copy the source into place
-    ( cd ${IMPALA_GIT} ; tar --exclude .git --exclude .gitignore -cf - . ) | ( cd $WORKSPACE/rpmbuild/SOURCES/ ; tar xf - )
+    pushd ${IMPALA_GIT}
+    tar --exclude .git --exclude .gitignore --transform "s,^.,${IMPALA_RELEASE}," -czf ${RPMBUILD}/SOURCES/${IMPALA_RELEASE}.tar.gz .
+    popd
 
     # build the source rpm
-    ${RPMBUILD_COMMAND} -bs ${RPMBUILD}/SPECS/impala.spec
+    # TODO: rpmbuild command is inlined because need to figure out how to put quoted _topdir string in RPMBUILD_COMMAND environment variable
+    # ${RPMBUILD_COMMAND} -bs ${RPMBUILD}/SPECS/impala.spec
+    rpmbuild -vvv --define "_topdir $RPMBUILD" -bs ${RPMBUILD}/SPECS/impala.spec
 }

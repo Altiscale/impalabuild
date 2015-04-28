@@ -1,10 +1,10 @@
 # This file is a submodule of ../build.sh.
 
-install_build_framework_help()
+emulate_chef_help()
 {
    echo 
-   echo install_build_framework
-   echo -----------------------
+   echo emulate_chef
+   echo ------------
    echo "Installs the frameworks required for the build to work."
    echo "These frameworks are typically installed directly on the build machine."
    echo "In general, this installation needs to be done once for many builds."
@@ -33,9 +33,9 @@ set_up_drive()
     sudo chown $USER:mock $BASEDIR
 }
 
-install_build_framework()
+emulate_chef()
 {
-    if (($HELP)) ; then install_build_framework_help ; return ; fi
+    if (($HELP)) ; then emulate_chef_help ; return ; fi
 
     install_mock
     set_up_drive

@@ -35,14 +35,22 @@ emulate_jenkins()
     # Should have the same default as in install_build_framework
     : ${BASEDIR:=/mnt/ssdb/$USER}
 
+    if [ ! -d "$BASEDIR" ] ; then
+	echo "emulate_jenkins requires emulate_chef"
+	emulate_chef
+    fi
+
     # standard jenkins variables
     export WORKSPACE=${WORKSPACE:=${BASEDIR}/impalabuild}
-    export BUILD_NUMBER=$(date -u +%Y%m%dT%H%M%SZ)
+    export BUILD_NUMBER=${BUILD_NUMBER:=$(date -u +%Y%m%dT%H%M%SZ)}
     
     mkdir -p $WORKSPACE
 
     # variables expected for this jenkins job
     export GIT_BRANCH=${GIT_BRANCH:=altiscale-branch-cdh5-2.1.2_5.3.2}
+    export IMPALA_RELEASE=${IMPALA_RELEASE:=impala-2.1.2-cdh5.3.2}
+
+    # emulate the git pull that jenkins will perform
     : ${GIT_USER:=git@github.com}
     : ${GIT_ORG:=Altiscale}
     : ${IMPALA_REPO:=Impala}

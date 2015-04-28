@@ -90,7 +90,51 @@ Requires: redhat-lsb
 %else
 Requires: libopenssl0_9_8
 %endif
+# BEGIN added by Altiscale (TODO: check that all are necessary + versions)
+Requires: jdk >= 1.7
+Requires: boost = 1.46.1
+Requires: cyrus-sasl-devel >= 2.1.23
+Requires: cyrus-sasl-gssapi >= 2.1.23
+Requires: python-setuptools >= 0.6.10
+Requires: /sbin/ldconfig
+# END added by Altiscale
+
 BuildRequires: ant, cmake, gcc
+
+# BEGIN added by Altiscale (TODO: check that all are necessary + versions)
+Requires: redhat-lsb >= 4.0
+BuildRequires: vcc-hadoop-2.4.1
+BuildRequires: vcc-hive-0.13.1
+BuildRequires: boost = 1.46.1
+BuildRequires: llvm = 3.3
+BuildRequires: cmake >= 2.6.4
+BuildRequires: cyrus-sasl-devel >= 2.1.23
+BuildRequires: libevent-devel >= 1.4.13
+BuildRequires: bzip2-devel >= 1.0.5
+BuildRequires: gcc >= 4.4.7
+BuildRequires: glibc-devel >= 2.12
+BuildRequires: glibc-headers >= 2.12
+BuildRequires: cpp >= 4.4.7
+BuildRequires: kernel-headers >= 2.6.32
+BuildRequires: bison >= 2.4.1
+BuildRequires: automake >= 1.11.1
+BuildRequires: gcc-c++ >= 4.4.7
+BuildRequires: openssl-devel >= 1.0.1e
+BuildRequires: autoconf >= 2.63
+BuildRequires: zlib-devel >= 1.2.3
+BuildRequires: keyutils-libs-devel >= 1.4
+BuildRequires: doxygen >= 1.6.1
+BuildRequires: xz-lzma-compat >= 4.999.9
+BuildRequires: jdk >= 1.7.0
+BuildRequires: wget >= 1.11
+BuildRequires: apache-maven >= 3.2.1
+BuildRequires: python-setuptools >= 0.6.10
+BuildRequires: python-devel >= 2.6.6
+BuildRequires: libtool >= 2.2.6
+BuildRequires: svn
+BuildRequires: git
+# END added by Altiscale
+
 Requires(post): %{alternatives_dep}
 Requires(preun): %{alternatives_dep}
 
