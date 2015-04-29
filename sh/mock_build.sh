@@ -32,5 +32,10 @@ mock_build()
     fi
 
     # run rpmbuild in the mock environment
-    ${MOCK_CMD} --no-clean --rpmbuild_timeout=$MOCK_TIMEOUT --resultdir=${RPMBUILD}/RPMS/ --rebuild ${RPMBUILD}/SRPMS/*.src.rpm
+    ${MOCK_CMD} \
+	--no-clean \
+	--define "buildnum ${BUILD_NUMBER}" \
+	--rpmbuild_timeout=$MOCK_TIMEOUT \
+	--resultdir=${RPMBUILD}/RPMS/ \
+	--rebuild ${RPMBUILD}/SRPMS/*.src.rpm
 }

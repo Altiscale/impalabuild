@@ -1,10 +1,12 @@
  
-%define impala_version 2.1.2+cdh5.3.2+0 
-%define impala_patched_version 2.1.2-cdh5.3.2 
+%define impala_version 2.1.2_2.4.1
+%define impala_patched_version 2.1.2_2.4.1
 %define impala_base_version 2.1.2 
-%define impala_release 1.cdh5.3.2.p0.17%{?dist} 
-%define cdh_customer_patch p0 
-%define cdh_parcel_custom_version 2.1.2+cdh5.3.2+0-1.cdh5.3.2.p0.17%{?dist}
+%define impala_release %{buildnum}%{?dist} 
+# TODO: remove cdh_* variables
+# %define cdh_customer_patch p0 
+# %define cdh_parcel_custom_version 2.1.2+cdh5.3.2+0-1.cdh5.3.2.p0.17%{?dist}
+
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
 # this work for additional information regarding copyright ownership.
@@ -64,15 +66,15 @@
   %define alternatives_dep update-alternatives
 %endif
 
-Name: impala
+Name: alti-impala
 Version: %{impala_version}
 Release: %{impala_release}
 Summary: Application for executing real-time queries on top of Hadoop
-URL: http://www.cloudera.com
+URL: http://www.altiscale.com
 Group: Development/Libraries
 Buildroot: %{_topdir}/INSTALL/%{name}-%{version}
 License: ASL 2.0
-Source0: impala-%{impala_patched_version}.tar.gz
+Source0: %{name}-%{impala_patched_version}.tar.gz
 Source1: do-component-build
 Source2: install_impala.sh
 Source3: filter-requires.sh

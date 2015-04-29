@@ -47,8 +47,8 @@ emulate_jenkins()
     mkdir -p $WORKSPACE
 
     # variables expected for this jenkins job
-    export GIT_BRANCH=${GIT_BRANCH:=altiscale-branch-cdh5-2.1.2_5.3.2}
-    export IMPALA_RELEASE=${IMPALA_RELEASE:=impala-2.1.2-cdh5.3.2}
+    export GIT_BRANCH=${GIT_BRANCH:=altiscale-branch-2.1.2_2.4.1}
+    export IMPALA_RELEASE=${IMPALA_RELEASE:=alti-impala-2.1.2_2.4.1}
 
     # Emulate the git pull that jenkins will perform.
     # Use the "Local subdirectory for repo" option for the Jenkins git

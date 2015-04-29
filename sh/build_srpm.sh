@@ -29,7 +29,10 @@ build_srpm()
     popd
 
     # build the source rpm
-    # TODO: rpmbuild command is inlined because need to figure out how to put quoted _topdir string in RPMBUILD_COMMAND environment variable
-    # ${RPMBUILD_COMMAND} -bs ${RPMBUILD}/SPECS/impala.spec
-    rpmbuild -vvv --define "_topdir $RPMBUILD" -bs ${RPMBUILD}/SPECS/impala.spec
+    rpmbuild \
+	-vvv \
+	-bs \
+	--define "_topdir $RPMBUILD" \
+	--define "buildnum $BUILD_NUMBER" \
+	${RPMBUILD}/SPECS/impala.spec
 }

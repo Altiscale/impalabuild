@@ -18,7 +18,5 @@ setup_rpmbuild()
     fi
 
     : ${RPMBUILD:=${BUILD_DIR}/rpmbuild}
-    : ${RPMBUILD_COMMAND:="rpmbuild -vvv --define '_topdir $RPMBUILD'"}
-
     mkdir -p ${RPMBUILD}/{BUILD,BUILDROOT,RPMS,SPECS,SOURCES,SRPMS}/
 }
