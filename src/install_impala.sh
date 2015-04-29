@@ -298,7 +298,7 @@ for notice in ${NOTICES}; do
     cp ${notice} ${dir}/
 done
 
-# Cloudera specific
-install -d -m 0755 $LIB_DIR/cloudera
-cp cloudera/cdh_version.properties $LIB_DIR/cloudera/
+# Cloudera specific (Removed by Altiscale)
+# install -d -m 0755 $LIB_DIR/cloudera
+# cp cloudera/cdh_version.properties $LIB_DIR/cloudera/
 

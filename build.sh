@@ -21,6 +21,7 @@ usage()
     echo "  setup_rpmbuild - set up the rpmbuild tree"
     echo "  build_srpm - create the source RPM from the spec and git repo"
     echo "  mock_build - use mock to build the RPM"
+    echo "  archive - copy artifacts of mock_build to persistent storage"
 }
 
 version()
@@ -54,6 +55,7 @@ for arg in $* ; do
     case $arg in
 	( "help" )                                              ;;
 	( "version" )                 version                   ;;
+	( "clean" )                   clean                     ;;
 	( "emulate_chef" )            emulate_chef              ;;
 	( "emulate_jenkins" )         emulate_jenkins           ;;
 	( "setup_environment" )       setup_environment         ;;
@@ -63,7 +65,7 @@ for arg in $* ; do
 	( "setup_rpmbuild" )          setup_rpmbuild            ;;
 	( "build_srpm" )              build_srpm                ;;
 	( "mock_build" )              mock_build                ;;
-	( "clean" )                   clean                     ;;
+	( "archive" )                 archive                   ;;
         ( * ) echo "unexpected argument: $arg" ; usage ; exit 1 ;;
     esac
 done

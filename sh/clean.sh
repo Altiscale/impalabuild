@@ -19,7 +19,9 @@ clean()
 
     if ( ls ${WORKSPACE}/build-*/mock >& /dev/null ) ; then
 	for mockdir in ${WORKSPACE}/build-*/mock ; do
-	    mock --configdir=$mockdir -r mock --clean
+	    if [ -f $mockdir/mock.cfg ] && [ -f $mockdir/site-defaults.cfg ] ; then
+		mock --configdir=$mockdir -r mock --clean
+	    fi
 	done
     fi
 

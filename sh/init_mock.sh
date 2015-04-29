@@ -74,8 +74,13 @@ init_mock()
     # initialize mock
     ${MOCK_CMD} --init
 
-    # Need to run this command in mock/chroot to allow java to work:
-    # ${MOCK_CMD} --chroot mount -t proc none /proc
-    # otherwise, this error happens when running mvn in ext-data-source:
+    # Note: If you need to do interactive debugging in the mock chroot, run:
+    #   ${MOCK_CMD} --shell
+    # Using --shell sets up the chroot so that it will actually work.
+    # For example, it mounts the /proc file system.  If you don't mount the
+    # mock file system, attempting to run java will generate an error that
+    # looks like this:
     #   /usr/java/default/bin/java: error while loading shared libraries: libjli.so: cannot open shared object file: No such file or directory
+    # It is possible to solve this issue by running "mount -t proc none /proc"
+    # in the chroot, but it is better to enter the chroot with mock --shell.
 }
