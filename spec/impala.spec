@@ -1,11 +1,12 @@
- 
-%define impala_version 2.1.2_2.4.1
-%define impala_patched_version 2.1.2_2.4.1
-%define impala_base_version 2.1.2 
-%define impala_release %{buildnum}%{?dist} 
-# TODO: remove cdh_* variables
-# %define cdh_customer_patch p0 
-# %define cdh_parcel_custom_version 2.1.2+cdh5.3.2+0-1.cdh5.3.2.p0.17%{?dist}
+# Top-level version information.
+# The following variables must be passed from rpmbuild:
+#   %impala_version
+#   %impala_hadoop_version
+#   %impala_hadoop_home
+#   %impala_hive_version
+#   %impala_hive_home
+%define impala_patched_version %{impala_version}
+%define impala_release %{buildnum}
 
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
@@ -146,7 +147,10 @@ Requires(preun): %{alternatives_dep}
 %define    __find_requires %{SOURCE3}
 
 %description 
-Application for executing real-time queries on top of Hadoop
+This package was built from Cloudera's source code,
+and linked with the Altiscale packages required for
+Impala to work with Altiscale's Hadoop as a service
+product.
 
 %package udf-devel
 Summary: Impala UDF development package
@@ -207,7 +211,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %build
 export COMPONENT_HASH=92438b7fb62a875041ffd2ab324f408ecf8129e5
-env FULL_VERSION=%{impala_patched_version} bash %{SOURCE1}
+env FULL_VERSION=%{impala_patched_version} \
+    IMPALA_HADOOP_VERSION=%{impala_hadoop_version} \
+    HADOOP_HOME=%{impala_hadoop_home} \
+    IMPALA_HIVE_VERSION=%{impala_hive_version} \
+    HIVE_HOME=%{impala_hive_home} \
+    bash %{SOURCE1}
 
 %install
 %__rm -rf $RPM_BUILD_ROOT

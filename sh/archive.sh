@@ -27,6 +27,4 @@ archive()
     # create the archive directory
     mkdir -p ${ARCHIVE_DIR}/RPMS
     cp -p ${RPMBUILD}/RPMS/*  ${ARCHIVE_DIR}/RPMS
-    mkdir -p ${ARCHIVE_DIR}/SRPMS
-    cp -p ${RPMBUILD}/SRPMS/* ${ARCHIVE_DIR}/SRPMS
 }

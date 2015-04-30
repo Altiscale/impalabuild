@@ -33,6 +33,11 @@ build_srpm()
 	-vvv \
 	-bs \
 	--define "_topdir $RPMBUILD" \
-	--define "buildnum $BUILD_NUMBER" \
+	--define "impala_version ${IMPALA_VERSION}" \
+	--define "buildnum ${BUILD_NUMBER}" \
+	--define "impala_hadoop_version ${IMPALA_HADOOP_VERSION}" \
+	--define "impala_hadoop_home ${IMPALA_HADOOP_HOME}" \
+	--define "impala_hive_version ${IMPALA_HIVE_VERSION}" \
+	--define "impala_hive_home ${IMPALA_HIVE_HOME}" \
 	${RPMBUILD}/SPECS/impala.spec
 }

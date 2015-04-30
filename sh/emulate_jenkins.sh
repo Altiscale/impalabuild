@@ -47,8 +47,10 @@ emulate_jenkins()
     mkdir -p $WORKSPACE
 
     # variables expected for this jenkins job
-    export GIT_BRANCH=${GIT_BRANCH:=altiscale-branch-2.1.2_2.4.1}
+    export IMPALA_VERSION=2.1.2_2.4.1
     export IMPALA_RELEASE=${IMPALA_RELEASE:=alti-impala-2.1.2_2.4.1}
+    export IMPALA_HADOOP_VERSION=${IMPALA_HADOOP_VERSION:=2.4.1}
+    export IMPALA_HIVE_VERSION=${IMPALA_HIVE_VERSION:=0.13.1}
 
     # Emulate the git pull that jenkins will perform.
     # Use the "Local subdirectory for repo" option for the Jenkins git
@@ -56,6 +58,7 @@ emulate_jenkins()
     : ${GIT_USER:=git@github.com}
     : ${GIT_ORG:=Altiscale}
     : ${IMPALA_REPO:=Impala}
+    : ${GIT_BRANCH:=altiscale-branch-2.1.2_2.4.1}
     GIT_URL=${GIT_USER}:${GIT_ORG}/${IMPALA_REPO}.git
     emulate_jenkins_git
 }

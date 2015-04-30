@@ -4,7 +4,7 @@ clean_help()
 {
     echo
     echo clean
-    echo -------
+    echo -----
     echo "Removes artifacts from previous builds."
 }
 
