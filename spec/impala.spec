@@ -1,10 +1,12 @@
 # Top-level version information.
-# The following variables must be passed from rpmbuild:
+# The following variables are included in impala_version.spec
 #   %impala_version
 #   %impala_hadoop_version
 #   %impala_hadoop_home
 #   %impala_hive_version
 #   %impala_hive_home
+Source100: impala_version.spec
+%include %{SOURCE100}
 %define impala_patched_version %{impala_version}
 %define impala_release %{buildnum}
 

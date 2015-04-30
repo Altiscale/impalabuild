@@ -34,12 +34,6 @@ mock_build()
     # run rpmbuild in the mock environment
     ${MOCK_CMD} \
 	--no-clean \
-	--define "impala_version ${IMPALA_VERSION}" \
-	--define "buildnum ${BUILD_NUMBER}" \
-	--define "impala_hadoop_version ${IMPALA_HADOOP_VERSION}" \
-	--define "impala_hadoop_home ${IMPALA_HADOOP_HOME}" \
-	--define "impala_hive_version ${IMPALA_HIVE_VERSION}" \
-	--define "impala_hive_home ${IMPALA_HIVE_HOME}" \
 	--rpmbuild_timeout=$MOCK_TIMEOUT \
 	--resultdir=${RPMBUILD}/RPMS/ \
 	--rebuild $SRPM
