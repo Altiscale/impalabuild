@@ -109,8 +109,8 @@ BuildRequires: ant, cmake, gcc
 
 # BEGIN added by Altiscale (TODO: check that all are necessary + versions)
 Requires: redhat-lsb >= 4.0
-BuildRequires: vcc-hadoop-2.4.1
-BuildRequires: vcc-hive-0.13.1
+BuildRequires: vcc-hadoop-%{impala_hadoop_version}
+BuildRequires: vcc-hive-%{impala_hive_version}
 BuildRequires: boost = 1.46.1
 BuildRequires: boost-date-time = 1.41.0
 BuildRequires: llvm = 3.3
