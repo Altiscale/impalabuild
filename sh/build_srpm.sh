@@ -43,7 +43,7 @@ build_srpm()
 
     # copy the source into place
     pushd ${WORKSPACE}
-    tar --exclude .git --exclude .gitignore -czf ${RPMBUILD}/SOURCES/${IMPALA_RELEASE}.tar.gz ${IMPALA_RELEASE}
+    tar --exclude .git --exclude .gitignore -czf ${RPMBUILD}/SOURCES/${IMPALA_RPM_NAME}.tar.gz ${IMPALA_RPM_NAME}
     popd
 
     # build the source rpm

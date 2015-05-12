@@ -37,6 +37,10 @@ setup_environment()
 
     export MAVEN_OPTS=${MAVEN_OPTS:="-Xmx2048m -XX:MaxPermSize=1024m"}
     export SCALA_HOME=${SCALA_HOME:=/opt/scala}
+
+    export IMPALA_HADOOP_VERSION=$HADOOP_VERSION
+    export IMPALA_HIVE_VERSION=$HIVE_VERSION
+    export IMPALA_RPM_NAME=${IMPALA_RPM_NAME:=alti-impala-${IMPALA_VERSION}}
     export IMPALA_HADOOP_HOME=${HADOOP_HOME:=/opt/hadoop-${IMPALA_HADOOP_VERSION}}
     # export HADOOP_CONF_DIR=${HADOOP_CONF_DIR:=/etc/hadoop-${ALTISCALE_HADOOP_VERSION}}
     export IMPALA_HIVE_HOME=${HIVE_HOME:=/opt/hive-${IMPALA_HIVE_VERSION}}

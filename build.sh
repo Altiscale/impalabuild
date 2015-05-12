@@ -15,7 +15,6 @@ usage()
     echo "  emulate_chef - one time set-up (requires sudo)"
     echo "  emulate_jenkins - set up the environment to emulate a jenkins job"
     echo "  setup_environment - set up the shell environment"
-    echo "  print_environment - print the shell environment"
     echo "  setup_mock - set up the mock environment variables"
     echo "  init_mock - set up the mock environment"
     echo "  setup_rpmbuild - set up the rpmbuild tree"
@@ -59,7 +58,6 @@ for arg in $* ; do
 	( "emulate_chef" )            emulate_chef              ;;
 	( "emulate_jenkins" )         emulate_jenkins           ;;
 	( "setup_environment" )       setup_environment         ;;
-	( "print_environment" )       print_environment         ;;
 	( "setup_mock" )              setup_mock                ;;
 	( "init_mock" )               init_mock                 ;;
 	( "setup_rpmbuild" )          setup_rpmbuild            ;;

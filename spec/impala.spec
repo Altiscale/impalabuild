@@ -1,6 +1,7 @@
 # Top-level version information.
 # The following variables are included in impala_version.spec
 #   %impala_version
+#   %buildnum
 #   %impala_hadoop_version
 #   %impala_hadoop_home
 #   %impala_hive_version
@@ -69,15 +70,15 @@ Source100: impala_version.spec
   %define alternatives_dep update-alternatives
 %endif
 
-Name: alti-impala
-Version: %{impala_version}
+Name: alti-impala-%{impala_version}
+Version: %{impala_hadoop_version}_%{impala_hive_version}
 Release: %{impala_release}
 Summary: Application for executing real-time queries on top of Hadoop
 URL: http://www.altiscale.com
 Group: Development/Libraries
-Buildroot: %{_topdir}/INSTALL/%{name}-%{version}
+Buildroot: %{_topdir}/INSTALL/%{name}
 License: ASL 2.0
-Source0: %{name}-%{impala_patched_version}.tar.gz
+Source0: %{name}.tar.gz
 Source1: do-component-build
 Source2: install_impala.sh
 Source3: filter-requires.sh
@@ -87,15 +88,13 @@ Source6: impalad.svc
 Source7: statestored.svc
 Source8: catalogd.svc
 Source9: packaging_functions.sh
-Requires: bigtop-utils >= 0.7, /usr/sbin/useradd, /usr/sbin/usermod, openssl
-Requires: hadoop, hadoop-hdfs, hadoop-yarn, hadoop-mapreduce, hbase, hive >= 0.12.0+cdh5.1.0, zookeeper, hadoop-libhdfs, avro-libs, parquet, sentry >= 1.3.0+cdh5.1.0
-Requires: avro-libs, parquet, sentry
 %if %{!?suse_version:1}0 && %{!?mgaversion:1}0
 Requires: redhat-lsb
 %else
 Requires: libopenssl0_9_8
 %endif
 # BEGIN added by Altiscale (TODO: check that all are necessary + versions)
+Requires: vcc-hadoop-%{impala_hadoop_version}, vcc-hive-%{impala_hive_version}
 Requires: jdk >= 1.7
 Requires: boost = 1.46.1
 Requires: boost-date-time = 1.41.0
@@ -206,7 +205,7 @@ Impala Catalog server
 %endif
 
 %prep
-%setup -n %{name}-%{impala_patched_version}
+%setup -n %{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT

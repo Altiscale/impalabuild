@@ -15,11 +15,12 @@ emulate_jenkins_help()
 emulate_jenkins_git()
 {
     pushd $WORKSPACE
+    GIT_DIR=alti-impala-${IMPALA_VERSION}
 
-    if [ ! -d "$IMPALA_RELEASE" ] ; then
-	git clone ${GIT_URL} "${IMPALA_RELEASE}"
+    if [ ! -d ${GIT_DIR} ] ; then
+	git clone ${GIT_URL} ${GIT_DIR}
     fi
-    cd "$IMPALA_RELEASE"
+    cd ${GIT_DIR}
     git fetch
     git checkout $GIT_BRANCH
     git pull
@@ -47,14 +48,13 @@ emulate_jenkins()
     mkdir -p $WORKSPACE
 
     # variables expected for this jenkins job
-    export IMPALA_VERSION=2.1.2_2.4.1
-    export IMPALA_RELEASE=${IMPALA_RELEASE:=alti-impala-2.1.2_2.4.1}
-    export IMPALA_HADOOP_VERSION=${IMPALA_HADOOP_VERSION:=2.4.1}
-    export IMPALA_HIVE_VERSION=${IMPALA_HIVE_VERSION:=0.13.1}
+    export IMPALA_VERSION=${IMPALA_VERSION:=2.1.2}
+    export HADOOP_VERSION=${HADOOP_VERSION:=2.4.1}
+    export HIVE_VERSION=${HIVE_VERSION:=0.13.1}
 
     # Emulate the git pull that jenkins will perform.
     # Use the "Local subdirectory for repo" option for the Jenkins git
-    # plugin and specify IMPALA_RELEASE as the subdirectory.
+    # plugin and specify alti-impala-$IMPALA_VERSION as the subdirectory.
     : ${GIT_USER:=git@github.com}
     : ${GIT_ORG:=Altiscale}
     : ${IMPALA_REPO:=Impala}

@@ -5,35 +5,35 @@ get_directory_for_jar() {
     case ${1} in
         avro*cassandra*) return;; # This is not included in our Avro distribution, but Mahout used to use it
         hadoop-client*) return;;
-        avro*) lib_dir='avro';;
-        trevni*) lib_dir='avro';;
-        parquet*) lib_dir='parquet';;
-        zookeeper*) lib_dir='zookeeper';;
-        hadoop-aws*) lib_dir='hadoop/client';;
-        hadoop-yarn*) lib_dir='hadoop-yarn';;
-        hadoop-hdfs*) lib_dir='hadoop-hdfs';;
-        hadoop-archives*) lib_dir='hadoop-mapreduce';;
-        hadoop-distcp*) lib_dir='hadoop-mapreduce';;
-        hadoop-mapreduce*) lib_dir='hadoop-mapreduce';;
-        hadoop-core*) lib_dir='hadoop/client-0.20';;
-        hadoop*) lib_dir='hadoop';;
-        hbase-indexer*) lib_dir='hbase-solr/lib';;
-        hbase-sep*) lib_dir='hbase-solr/lib';;
-        hbase*) lib_dir='hbase';;
-        hive-hcatalog*) lib_dir='hive-hcatalog/share/hcatalog';;
-        hive-webhcat-java-client*) lib_dir='hive-hcatalog/share/webhcat/java-client';;
+        avro*) lib_dir='hadoop/share/hadoop/common/lib';;
+        trevni*) return;;
+        parquet*) return;;
+        zookeeper*) lib_dir='hadoop/share/hadoop/common/lib';;
+        hadoop-aws*) return;;
+        hadoop-yarn*) lib_dir='hadoop/share/hadoop/yarn';;
+        hadoop-hdfs*) lib_dir='hadoop/share/hadoop/hdfs';;
+        hadoop-archives*) lib_dir='hadoop/share/hadoop/tools/lib';;
+        hadoop-distcp*) lib_dir='hadoop/share/hadoop/tools/lib';;
+        hadoop-mapreduce*) lib_dir='hadoop/share/hadoop/mapreduce';;
+        hadoop-core*) return;;
+        hadoop*) lib_dir='hadoop/share/hadoop/common';;
+        hbase-indexer*) return;;
+        hbase-sep*) return;;
+        hbase*) return;;
+        hive-hcatalog*) lib_dir='hive/hcatalog/share/hcatalog';;
+        hive-webhcat-java-client*) lib_dir='hive/hcatalog/share/webhcat/java-client';;
         hive*) lib_dir='hive/lib';;
-        sentry*) lib_dir='sentry/lib';;
-        solr*) lib_dir='solr';;
-        lucene*) lib_dir='solr/webapps/solr/WEB-INF/lib';;
-        kite*) lib_dir='kite';;
-        crunch*) lib_dir='crunch';;
-        search-crunch*) lib_dir='solr/contrib/crunch';;
-        search-mr*) lib_dir='solr/contrib/mr';;
-        search*) lib_dir='search/lib';;
+        sentry*) return;;
+        solr*) return;;
+        lucene*) return;;
+        kite*) return;;
+        crunch*) return;;
+        search-crunch*) return;;
+        search-mr*) return;;
+        search*) return;;
         *) return;;
     esac
-    echo "/usr/lib/${lib_dir}"
+    echo "/opt/${lib_dir}"
 }
 
 # Looks up which package can be depended on to install a certain directory, to map symlinks to package dependencies
@@ -109,7 +109,8 @@ function external_versionless_symlinks() {
             new_jar=`strip_versions $base_jar`
             new_dir=`get_directory_for_jar ${base_jar}`
             if [ -z "${new_dir}" ]; then continue; fi
-            check_for_package_dependency ${new_dir}
+	    # TODO: consider whether this check adds value for Altiscale builds
+            # check_for_package_dependency ${new_dir}
             rm $old_jar && ln -fs ${new_dir}/${new_jar} $dir/
         done
     done
