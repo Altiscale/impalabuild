@@ -9,9 +9,9 @@ get_directory_for_jar() {
         trevni*) return;;
         parquet*) return;;
         zookeeper*) lib_dir='hadoop/share/hadoop/common/lib';;
-	hadoop-annotations*) lib_dir='hadoop/share/hadoop/common/lib/';;
+	hadoop-annotations*) lib_dir='hadoop/share/hadoop/common/lib';;
         hadoop-archives*) lib_dir='hadoop/share/hadoop/tools/lib';;
-	hadoop-auth*) lib_dir='hadoop/share/hadoop/common/lib/';;
+	hadoop-auth*) lib_dir='hadoop/share/hadoop/common/lib';;
         hadoop-aws*) return;;
         hadoop-core*) return;;
         hadoop-distcp*) lib_dir='hadoop/share/hadoop/tools/lib';;
