@@ -224,7 +224,7 @@ env FULL_VERSION=%{impala_patched_version} \
 bash %{SOURCE2} \
           --build-dir=$RPM_SOURCE_DIR \
           --prefix=$RPM_BUILD_ROOT \
-          --native-lib-dir=lib64 \
+          --native-lib-dir=%{impala_hadoop_home}/lib/native \
           --system-include-dir=%{_includedir} \
           --system-lib-dir=%{_libdir} \
           --extra-dir=$RPM_SOURCE_DIR

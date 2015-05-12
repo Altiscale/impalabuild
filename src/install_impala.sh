@@ -154,12 +154,14 @@ function symlink_lib() {
     rm $file
     base=`basename $file`
     versionless=${base/-[0-9].*/.jar}
-    ln -s ../../$dir/`basename $versionless` $DEPENDENCY_DIR/
+    # Altiscale: link to absolute directory
+    ln -s $dir/`basename $versionless` $DEPENDENCY_DIR/
 }
 # Remove MR1 Hive shim
 rm -f $DEPENDENCY_DIR/hive-shims-0.23*.jar $DEPENDENCY_DIR/hadoop-core*.jar;
-for file in $DEPENDENCY_DIR/libhdfs*.so*; do symlink_lib $file ../${NATIVE_LIB_DIR}; done
-for file in $DEPENDENCY_DIR/libhadoop*.so*; do symlink_lib $file hadoop/lib/native; done
+# Altiscale: use NATIVE_LIB_DIR to link to absolute native library directory
+for file in $DEPENDENCY_DIR/libhdfs*.so*; do symlink_lib $file ${NATIVE_LIB_DIR}; done
+for file in $DEPENDENCY_DIR/libhadoop*.so*; do symlink_lib $file ${NATIVE_LIB_DIR}; done
 
 external_versionless_symlinks 'impala' ${LIB_DIR}/lib
 

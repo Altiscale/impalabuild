@@ -25,7 +25,7 @@ mock_build()
 	init_mock
     fi
 
-    SRPM=${RPMBUILD}/SRPMS/alti-impala-${IMPALA_VERSION}-${BUILD_NUMBER}.src.rpm
+    SRPM=${RPMBUILD}/SRPMS/alti-impala-${IMPALA_VERSION}-${HADOOP_VERSION}_${HIVE_VERSION}-${BUILD_NUMBER}.src.rpm
     if ( ! ls $SRPM >& /dev/null ) ; then
 	echo "mock_build requires build_srpm"
 	build_srpm
