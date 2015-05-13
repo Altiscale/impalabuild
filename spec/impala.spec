@@ -241,10 +241,11 @@ bash $init_source/init.d.tmpl $init_source/catalogd.svc rpm $init_target/impala-
 %__install -m 0644 %{SOURCE5} $RPM_BUILD_ROOT/etc/security/limits.d/impala.conf
 
 %pre
-getent group impala >/dev/null || groupadd -r impala
-getent group hive >/dev/null || groupadd -r hive
-getent group hdfs >/dev/null || groupadd -r hdfs
-getent passwd impala >/dev/null || /usr/sbin/useradd --comment "Impala" --shell /bin/bash -M -r -g impala -G hive,hdfs --home %{impala_lib} impala
+# Altiscale installs system users and groups with chef
+# getent group impala >/dev/null || groupadd -r impala
+# getent group hive >/dev/null || groupadd -r hive
+# getent group hdfs >/dev/null || groupadd -r hdfs
+# getent passwd impala >/dev/null || /usr/sbin/useradd --comment "Impala" --shell /bin/bash -M -r -g impala -G hive,hdfs --home %{impala_lib} impala
 
 %post
 %{alternatives_cmd} --install /etc/impala/conf impala-conf /etc/impala/conf.dist        30
