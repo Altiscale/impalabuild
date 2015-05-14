@@ -204,7 +204,7 @@ BIGTOP_DEFAULTS_DIR=\${BIGTOP_DEFAULTS_DIR-/etc/default}
 # Autodetect JAVA_HOME if not defined
 # . /usr/lib/bigtop-utils/bigtop-detect-javahome
 # Altiscale chef installation will guarantee that JAVA_HOME is set
-if [ -z "$JAVA_HOME" ] ; then
+if [ -z "\$JAVA_HOME" ] ; then
   echo JAVA_HOME required but not defined
   exit 1
 fi
